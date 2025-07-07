@@ -151,6 +151,20 @@
       padding: 14px 22px;
       box-shadow: 0 2px 8px rgba(100,100,100,0.08);
     }
+    /* 頁腳樣式 */
+    .main-footer {
+      width: 100%;
+      background: var(--morandi-green-dark);
+      color: #fff;
+      text-align: center;
+      padding: 18px 0 12px 0;
+      font-size: 1.08em;
+      font-family: 'Noto Sans TC', sans-serif;
+      letter-spacing: 1px;
+      margin-top: 40px;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 -2px 12px #b7c4b133;
+    }
     @media (max-width:600px) {
       .container { padding: 0 2vw; }
       .workflow-title { font-size: 1.3em;}
@@ -216,13 +230,16 @@
       <ul>
         <li>剪輯合成各段影片、調整節奏、加入轉場與特效。</li>
         <li>輸出合適的影片格式、解析度，準備發布。</li>
-        <li><strong>建議工具：</strong>Clipchamp、FlexClip 等影片工具。</li>
+        <li><strong>建議工具：</strong>Clipchamp、FlexClip、CapCut 等影片工具。</li>
       </ul>
     </div>
     <div class="workflow-note">
       每個階段都可根據需求反覆調整，並結合自動化工具進行流程優化，讓影片製作更高效與具創意！
     </div>
   </div>
+  <footer class="main-footer">
+    <span id="footer-year"></span> 奇美醫院教學中心製
+  </footer>
   <script>
     // 導覽列 active 標示（請複製到所有頁面）
     document.querySelectorAll('.nav-links a').forEach(link => {
@@ -235,6 +252,8 @@
         link.classList.add('active');
       }
     });
+    // 自動插入年份到頁腳
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
