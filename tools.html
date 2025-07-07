@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>工具平台 | AI影片製作指南</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --morandi-green-dark: #587b6a;
+      --morandi-green: #88a096;
+      --morandi-green-light: #b7c4b1;
+      --morandi-green-lighter: #e2ede9;
+      --morandi-blue: #6d8c99;
+      --morandi-bg: #f6f7f5;
+      --morandi-block: #dde5e0;
+      --morandi-block-title: #557d6b;
+      --morandi-table-header: #685f37;
+    }
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--morandi-bg);
+      margin: 0;
+    }
+    .main-navbar {
+      width: 100%;
+      background: var(--morandi-green-dark);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 0 0 10px;
+      min-height: 48px;
+      border-radius: 8px 8px 0 0;
+      box-sizing: border-box;
+    }
+    .main-navbar .nav-logo {
+      font-size: 2.2em;
+      font-weight: 700;
+      color: #fff;
+      margin-right: 28px;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.07);
+      text-decoration: none;
+      line-height: 1.1;
+      font-family: 'Noto Sans TC', sans-serif;
+      padding: 0 8px 0 4px;
+      display: flex;
+      align-items: center;
+    }
+    .main-navbar .nav-links {
+      display: flex;
+      gap: 18px;
+      margin-top: 3px;
+    }
+    .main-navbar .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.25em;
+      font-weight: 700;
+      padding: 2px 14px;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.13s;
+      letter-spacing: 0.5px;
+      margin: 0 2px;
+      display: inline-block;
+    }
+    .main-navbar .nav-links a.active,
+    .main-navbar .nav-links a:hover {
+      background: var(--morandi-green-light);
+      color: var(--morandi-green-dark);
+    }
+    @media (max-width: 900px) {
+      .main-navbar { flex-direction: column; align-items: flex-start; min-height: unset; padding: 0 0 0 6px;}
+      .main-navbar .nav-logo { font-size: 1.3em; margin-bottom: 4px;}
+      .main-navbar .nav-links { gap: 8px; flex-wrap: wrap;}
+      .main-navbar .nav-links a { font-size: 1em; }
+    }
+    .container {
+      max-width: 1050px;
+      margin: 32px auto 0 auto;
+      padding: 0 16px 40px 16px;
+    }
+    .tools-title {
+      color: var(--morandi-blue);
+      font-size: 2em;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      margin: 25px 0 18px 0;
+      letter-spacing: 2px;
+    }
+    .tools-title .icon {
+      font-size: 1.1em;
+      margin-right: 10px;
+      color: var(--morandi-blue);
+    }
+    .tools-table {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 12px;
+      margin-bottom: 16px;
+    }
+    .tool-col {
+      background: var(--morandi-block);
+      border-radius: 13px;
+      flex: 1 1 230px;
+      min-width: 220px;
+      padding: 18px 18px 20px 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      box-shadow: 0 2px 10px rgba(120,120,120,0.09);
+      border: 2.5px solid var(--morandi-green-light);
+    }
+    .tool-col-header {
+      color: #fff;
+      background: var(--morandi-table-header);
+      font-weight: bold;
+      font-size: 1.18em;
+      padding: 7px 14px;
+      border-radius: 8px;
+      margin-bottom: 13px;
+      letter-spacing: 1px;
+      align-self: stretch;
+      text-align: center;
+    }
+    .tool-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+    .tool-list li {
+      margin-bottom: 13px;
+    }
+    .tool-link {
+      display: block;
+      text-decoration: none;
+      color: var(--morandi-green-dark);
+      background: var(--morandi-green-lighter);
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 1.1em;
+      font-weight: 600;
+      transition: background 0.14s, color 0.14s;
+      box-shadow: 0 1px 3px rgba(150,170,150,0.07);
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .tool-link:hover {
+      background: var(--morandi-blue);
+      color: #fff;
+    }
+    @media (max-width:1000px) {
+      .tools-table { flex-direction: column; gap: 8px;}
+      .tool-col { margin-bottom: 10px; }
+    }
+    @media (max-width:600px) {
+      .container { padding: 0 2vw; }
+      .tools-title { font-size: 1.3em; }
+      .tool-col-header { font-size: 1em; padding: 4px 7px;}
+    }
+  </style>
+</head>
+<body>
+  <!-- 導覽列 -->
+  <nav class="main-navbar">
+    <a href="index.html" class="nav-logo">AI影片製作指南</a>
+    <div class="nav-links">
+      <a href="index.html">首頁</a>
+      <a href="concepts.html">核心應用</a>
+      <a href="prompts.html">Prompt結構</a>
+      <a href="workflow.html">製作流程</a>
+      <a href="tools.html" class="active">工具平台</a>
+      <a href="custom.html">Prompt生成器</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="tools-title">
+      <span class="icon">🛠️</span> 工具平台
+    </div>
+    <div class="tools-table">
+
+      <!-- 文生圖片 -->
+      <div class="tool-col">
+        <div class="tool-col-header">文生圖片</div>
+        <ul class="tool-list">
+          <li><a class="tool-link" href="https://chat.openai.com/" target="_blank">ChatGPT</a></li>
+          <li><a class="tool-link" href="https://grok.x.ai/" target="_blank">Grok</a></li>
+          <li><a class="tool-link" href="https://www.bing.com/images/create" target="_blank">Bing</a></li>
+          <li><a class="tool-link" href="https://leonardo.ai/" target="_blank">Leonardo.Ai</a></li>
+          <li><a class="tool-link" href="https://www.dreamina.com/" target="_blank">Dreamina</a></li>
+        </ul>
+      </div>
+
+      <!-- 文生/圖生影片 -->
+      <div class="tool-col">
+        <div class="tool-col-header">文生/圖生影片</div>
+        <ul class="tool-list">
+          <li><a class="tool-link" href="https://runwayml.com/" target="_blank">runway</a></li>
+          <li><a class="tool-link" href="https://openai.com/sora" target="_blank">Sora</a></li>
+          <li><a class="tool-link" href="https://www.hailuoai.com/" target="_blank">Hailuo AI</a></li>
+          <li><a class="tool-link" href="https://www.luma.ai/" target="_blank">Luma AI</a></li>
+          <li><a class="tool-link" href="https://kling.zhipu.ai/" target="_blank">KLING</a></li>
+        </ul>
+      </div>
+
+      <!-- 虛擬人工具 -->
+      <div class="tool-col">
+        <div class="tool-col-header">虛擬人工具</div>
+        <ul class="tool-list">
+          <li><a class="tool-link" href="https://www.d-id.com/" target="_blank">D-ID</a></li>
+          <li><a class="tool-link" href="https://www.heygen.com/" target="_blank">HeyGen</a></li>
+          <li><a class="tool-link" href="https://www.synthesia.io/" target="_blank">synthesia</a></li>
+        </ul>
+      </div>
+
+      <!-- 音樂/配樂 -->
+      <div class="tool-col">
+        <div class="tool-col-header">音樂/配樂</div>
+        <ul class="tool-list">
+          <li><a class="tool-link" href="https://suno.ai/" target="_blank">Suno</a></li>
+          <li><a class="tool-link" href="https://ttsmaker.com/" target="_blank">TTSMAKER</a></li>
+        </ul>
+      </div>
+
+      <!-- 影片編輯 -->
+      <div class="tool-col">
+        <div class="tool-col-header">影片編輯</div>
+        <ul class="tool-list">
+          <li><a class="tool-link" href="https://www.canva.com/" target="_blank">Canva</a></li>
+          <li><a class="tool-link" href="https://www.clipchamp.com/" target="_blank">Clipchamp</a></li>
+          <li><a class="tool-link" href="https://www.flexclip.com/" target="_blank">FlexClip</a></li>
+          <li><a class="tool-link" href="https://www.capcut.com/" target="_blank">剪映</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <script>
+    // 導覽列 active 標示
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      if (location.pathname.endsWith(link.getAttribute('href'))) {
+        link.classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>

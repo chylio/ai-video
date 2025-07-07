@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>核心應用 | AI影片製作指南</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --morandi-green-dark: #587b6a;
+      --morandi-green: #88a096;
+      --morandi-green-light: #b7c4b1;
+      --morandi-green-lighter: #e2ede9;
+      --morandi-blue: #6d8c99;
+      --morandi-grey: #d6d7d9;
+      --morandi-bg: #f6f7f5;
+      --morandi-block: #dde5e0;
+      --morandi-block2: #c6d1c5;
+      --morandi-block-title: #557d6b;
+      --morandi-accent: #b4d2c2;
+    }
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--morandi-bg);
+      margin: 0;
+    }
+    .main-navbar {
+      width: 100%;
+      background: var(--morandi-green-dark);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 0 0 10px;
+      min-height: 48px;
+      border-radius: 8px 8px 0 0;
+      box-sizing: border-box;
+    }
+    .main-navbar .nav-logo {
+      font-size: 2.2em;
+      font-weight: 700;
+      color: #fff;
+      margin-right: 28px;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.07);
+      text-decoration: none;
+      line-height: 1.1;
+      font-family: 'Noto Sans TC', sans-serif;
+      padding: 0 8px 0 4px;
+      display: flex;
+      align-items: center;
+    }
+    .main-navbar .nav-links {
+      display: flex;
+      gap: 18px;
+      margin-top: 3px;
+    }
+    .main-navbar .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.25em;
+      font-weight: 700;
+      padding: 2px 14px;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.13s;
+      letter-spacing: 0.5px;
+      margin: 0 2px;
+      display: inline-block;
+    }
+    .main-navbar .nav-links a.active,
+    .main-navbar .nav-links a:hover {
+      background: var(--morandi-green-light);
+      color: var(--morandi-green-dark);
+    }
+    @media (max-width: 900px) {
+      .main-navbar { flex-direction: column; align-items: flex-start; min-height: unset; padding: 0 0 0 6px;}
+      .main-navbar .nav-logo { font-size: 1.3em; margin-bottom: 4px;}
+      .main-navbar .nav-links { gap: 8px; flex-wrap: wrap;}
+      .main-navbar .nav-links a { font-size: 1em; }
+    }
+    .container {
+      max-width: 900px;
+      margin: 32px auto 0 auto;
+      padding: 0 16px 40px 16px;
+    }
+    .core-title {
+      color: var(--morandi-blue);
+      font-size: 2.2em;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      margin: 25px 0 12px 0;
+      letter-spacing: 2px;
+    }
+    .core-title .icon {
+      font-size: 1.1em;
+      margin-right: 10px;
+      color: var(--morandi-blue);
+    }
+    .core-desc {
+      color: var(--morandi-green-dark);
+      font-size: 1.13em;
+      margin-bottom: 22px;
+      margin-top: 0;
+      letter-spacing: 0.5px;
+    }
+    .core-block {
+      background: var(--morandi-block);
+      border-radius: 14px;
+      margin-bottom: 22px;
+      padding: 22px 28px 18px 28px;
+      color: var(--morandi-green-dark);
+      box-shadow: 0 2px 12px rgba(150,170,150,0.10);
+      position: relative;
+      border-left: 8px solid var(--morandi-green-dark);
+    }
+    .core-block .block-title {
+      color: var(--morandi-block-title);
+      font-size: 1.3em;
+      font-weight: bold;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      letter-spacing: 1px;
+    }
+    .core-block .block-title .icon {
+      margin-right: 8px;
+      font-size: 1.25em;
+      opacity: 0.95;
+    }
+    .core-block ul {
+      margin: 10px 0 0 0;
+      padding-left: 1.3em;
+      color: var(--morandi-green-dark);
+      font-size: 1.04em;
+      letter-spacing: 0.1em;
+    }
+    .core-block li {
+      margin-bottom: 2px;
+    }
+    .core-block strong {
+      color: var(--morandi-green-dark);
+      font-weight: bold;
+    }
+    .core-note {
+      color: var(--morandi-green-dark);
+      margin: 28px 0 10px 0;
+      font-size: 1em;
+      letter-spacing: 1px;
+      background: var(--morandi-block2);
+      border-radius: 9px;
+      padding: 14px 22px;
+      box-shadow: 0 2px 8px rgba(100,100,100,0.08);
+    }
+    @media (max-width:600px) {
+      .container { padding: 0 2vw; }
+      .core-title { font-size: 1.35em;}
+      .core-block { padding: 14px 8px 10px 12px;}
+      .core-block .block-title { font-size: 1.05em;}
+    }
+  </style>
+</head>
+<body>
+  <!-- 導覽列 -->
+  <nav class="main-navbar">
+    <a href="index.html" class="nav-logo">AI影片製作指南</a>
+    <div class="nav-links">
+      <a href="index.html">首頁</a>
+      <a href="concepts.html" class="active">核心應用</a>
+      <a href="prompts.html">Prompt結構</a>
+      <a href="workflow.html">製作流程</a>
+      <a href="tools.html">工具平台</a>
+      <a href="custom.html">Prompt生成器</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="core-title">
+      <span class="icon">📘</span> 核心應用
+    </div>
+    <p class="core-desc">
+      生成式AI的功能與應用廣泛，包含：
+    </p>
+
+    <div class="core-block">
+      <div class="block-title"><span class="icon">📝</span>文字生成內容創作</div>
+      <ul>
+        <li><strong>功能：</strong>大幅提升寫作效率、快速產生文章初稿，減少思考框架時間。</li>
+        <li><strong>應用場景：</strong>提供結構清晰的文章大綱，協助完成各種公告或信件。</li>
+      </ul>
+    </div>
+
+    <div class="core-block">
+      <div class="block-title"><span class="icon">🖼️</span>圖像設計與創意產業</div>
+      <ul>
+        <li><strong>功能：</strong>快速產出設計概念、激發創意多樣性、降低專業門檻。</li>
+        <li><strong>應用場景：</strong>生成精畫風品牌設計、根據文字描述產生高品質圖片，幫助設計師構思和激發靈感。</li>
+      </ul>
+    </div>
+
+    <div class="core-block">
+      <div class="block-title"><span class="icon">🎓</span>教育輔助與個性化學習</div>
+      <ul>
+        <li><strong>功能：</strong>提升教材製作效率、提供個性化學習體驗、即時學習支援、增強衛教宣導效果。</li>
+        <li><strong>應用場景：</strong>生成教學材料和測題、設計個性化學習計畫、提供即時學習建議和解答，製作健康衛教內容、疾病預防宣導材料、用藥安全指導、營養教育資源。</li>
+      </ul>
+    </div>
+
+    <div class="core-block">
+      <div class="block-title"><span class="icon">🎵</span>音樂與娛樂創作</div>
+      <ul>
+        <li><strong>功能：</strong>自動生成音樂元素、降低音樂創作門檻、提供創作靈感。</li>
+        <li><strong>應用場景：</strong>自動生成旋律與編曲，協助音樂人創作完整作品，幫助非專業人士創造動聽音樂、創意故事生成。</li>
+      </ul>
+    </div>
+
+    <div class="core-note">
+      影片可應用於衛教、教學輔助、流程或活動說明、醫院或單位形象介紹。
+    </div>
+  </div>
+  <script>
+    // 導覽列 active 標示
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      if (location.pathname.endsWith(link.getAttribute('href'))) {
+        link.classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>

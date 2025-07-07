@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt生成器 | AI影片製作指南</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --morandi-green-dark: #587b6a;
+      --morandi-green: #88a096;
+      --morandi-green-light: #b7c4b1;
+      --morandi-green-lighter: #e2ede9;
+      --morandi-blue: #6d8c99;
+      --morandi-bg: #f6f7f5;
+      --morandi-block: #dde5e0;
+      --morandi-block-title: #557d6b;
+      --morandi-accent: #b4d2c2;
+    }
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--morandi-bg);
+      margin: 0;
+    }
+    .main-navbar {
+      width: 100%;
+      background: var(--morandi-green-dark);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 0 0 10px;
+      min-height: 48px;
+      border-radius: 8px 8px 0 0;
+      box-sizing: border-box;
+    }
+    .main-navbar .nav-logo {
+      font-size: 2.2em;
+      font-weight: 700;
+      color: #fff;
+      margin-right: 28px;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.07);
+      text-decoration: none;
+      line-height: 1.1;
+      font-family: 'Noto Sans TC', sans-serif;
+      padding: 0 8px 0 4px;
+      display: flex;
+      align-items: center;
+    }
+    .main-navbar .nav-links {
+      display: flex;
+      gap: 18px;
+      margin-top: 3px;
+    }
+    .main-navbar .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.25em;
+      font-weight: 700;
+      padding: 2px 14px;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.13s;
+      letter-spacing: 0.5px;
+      margin: 0 2px;
+      display: inline-block;
+    }
+    .main-navbar .nav-links a.active,
+    .main-navbar .nav-links a:hover {
+      background: var(--morandi-green-light);
+      color: var(--morandi-green-dark);
+    }
+    @media (max-width: 900px) {
+      .main-navbar { flex-direction: column; align-items: flex-start; min-height: unset; padding: 0 0 0 6px;}
+      .main-navbar .nav-logo { font-size: 1.3em; margin-bottom: 4px;}
+      .main-navbar .nav-links { gap: 8px; flex-wrap: wrap;}
+      .main-navbar .nav-links a { font-size: 1em; }
+    }
+    .container {
+      max-width: 900px;
+      margin: 32px auto 0 auto;
+      padding: 0 16px 40px 16px;
+    }
+    .custom-title {
+      color: var(--morandi-blue);
+      font-size: 2em;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      margin: 25px 0 12px 0;
+      letter-spacing: 2px;
+    }
+    .custom-title .icon {
+      font-size: 1.18em;
+      margin-right: 10px;
+      color: var(--morandi-blue);
+    }
+    .custom-desc {
+      color: var(--morandi-green-dark);
+      font-size: 1.16em;
+      margin-bottom: 20px;
+      margin-top: 0;
+      letter-spacing: 0.5px;
+    }
+    .custom-instruction {
+      background: var(--morandi-block);
+      border-left: 5px solid var(--morandi-blue);
+      border-radius: 10px;
+      margin-bottom: 22px;
+      padding: 18px 24px;
+      font-size: 1.07em;
+      color: #383f33;
+      box-shadow: 0 2px 12px rgba(150,170,150,0.07);
+    }
+    .custom-instruction strong {
+      color: var(--morandi-blue);
+    }
+    .custom-instruction ul {
+      margin: 10px 0 0 20px;
+      padding: 0;
+    }
+    .generator-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 22px;
+      margin-top: 10px;
+    }
+    .generator-tab {
+      background: var(--morandi-green-light);
+      color: var(--morandi-green-dark);
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px 8px 0 0;
+      font-size: 1.14em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.12s, color 0.12s;
+      outline: none;
+    }
+    .generator-tab.active {
+      background: var(--morandi-blue);
+      color: #fff;
+    }
+    .generator-block {
+      background: var(--morandi-block);
+      border-radius: 0 0 13px 13px;
+      padding: 24px 20px 28px 20px;
+      box-shadow: 0 2px 12px rgba(150,170,150,0.10);
+      margin-bottom: 20px;
+    }
+    .generator-form label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+      color: var(--morandi-green-dark);
+      margin-bottom: 3px;
+    }
+    .generator-form input,
+    .generator-form textarea,
+    .generator-form select {
+      width: 100%;
+      padding: 7px 10px;
+      border-radius: 5px;
+      border: 1.5px solid var(--morandi-green-light);
+      background: #fff;
+      font-size: 1.06em;
+      margin-bottom: 10px;
+      font-family: 'Noto Sans TC', sans-serif;
+      resize: vertical;
+    }
+    .generator-form textarea {
+      min-height: 54px;
+      max-height: 180px;
+    }
+    .generator-form button {
+      background: var(--morandi-blue);
+      color: #fff;
+      border: none;
+      padding: 9px 30px;
+      border-radius: 7px;
+      font-size: 1.15em;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.14s;
+      margin-bottom: 8px;
+    }
+    .generator-form button:hover {
+      background: var(--morandi-green-dark);
+    }
+    .prompt-output-block {
+      margin-top: 15px;
+      background: var(--morandi-green-lighter);
+      border-radius: 7px;
+      padding: 14px 12px;
+      font-size: 1.05em;
+      position: relative;
+      color: #333;
+      word-break: break-word;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--morandi-green-light);
+      color: var(--morandi-green-dark);
+      border: none;
+      border-radius: 4px;
+      padding: 3px 9px;
+      font-size: 0.93em;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.12s;
+    }
+    .copy-btn:hover {
+      background: var(--morandi-blue);
+      color: #fff;
+    }
+    .select-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .select-row > * {
+      flex: 1;
+      min-width: 0;
+    }
+    .select-or {
+      font-size: 1em;
+      color: #888;
+    }
+    @media (max-width:600px) {
+      .container { padding: 0 2vw; }
+      .custom-title { font-size: 1.3em;}
+      .custom-instruction { padding: 12px 6vw; font-size: 0.98em;}
+      .generator-block { padding: 13px 4vw 14px 4vw;}
+      .generator-tabs { flex-direction: column; gap: 2px;}
+      .generator-tab { width: 100%; border-radius: 7px; margin-bottom: 2px;}
+      .select-row { flex-direction: column; gap: 2px;}
+    }
+  </style>
+</head>
+<body>
+  <!-- 導覽列 -->
+  <nav class="main-navbar">
+    <a href="index.html" class="nav-logo">AI影片製作指南</a>
+    <div class="nav-links">
+      <a href="index.html">首頁</a>
+      <a href="concepts.html">核心應用</a>
+      <a href="prompts.html">提示詞結構</a>
+      <a href="workflow.html">製作流程</a>
+      <a href="tools.html">工具平台</a>
+      <a href="custom.html" class="active">Prompt生成器</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="custom-title">
+      <span class="icon">✨</span> Prompt生成器
+    </div>
+    <div class="custom-desc">
+      根據你的需求，自動產生 AI 影片製作最適用的 Prompt！<br>
+      請選擇下方功能，輸入資訊，即可一鍵複製、貼上到大語言模型或 AI 平台使用。
+    </div>
+    <div class="custom-instruction">
+      <strong>使用說明：</strong>
+      <ul>
+        <li>1. 選擇上方的 <strong>Prompt 類型</strong>（文生腳本、文生圖片、文生影片、影片AI Agent）。</li>
+        <li>2. 依欄位輸入你的需求，風格/鏡頭/比例等欄位可下拉選擇或自行填寫。</li>
+        <li>3. 完成後點擊「產生Prompt」。</li>
+        <li>4. 下方會自動產生對應的 Prompt（包含中英文），點擊「複製」即可貼到 ChatGPT、Claude、Gemini 等 AI 模型或繪圖/影片平台。</li>
+        <li>5. 如需多組Prompt，可多次操作本頁。</li>
+      </ul>
+    </div>
+    <div class="generator-tabs">
+      <button class="generator-tab active" data-tab="script">文生腳本 Prompt生成器</button>
+      <button class="generator-tab" data-tab="image">文生圖片 Prompt生成器</button>
+      <button class="generator-tab" data-tab="video">文生影片 Prompt生成器</button>
+      <button class="generator-tab" data-tab="agent">影片AI Agent執行生成器</button>
+    </div>
+    <!-- 文生腳本 -->
+    <div class="generator-block" id="tab-script">
+      <form class="generator-form" id="form-script">
+        <label>主題</label>
+        <input type="text" name="topic" placeholder="如：AI在教育中的應用" required>
+        <label>目標觀眾</label>
+        <input type="text" name="audience" placeholder="如：國高中生、老師、家長">
+        <label>風格</label>
+        <div class="select-row">
+          <select name="style_s">
+            <option value="">請選擇</option>
+            <option>輕鬆幽默</option>
+            <option>專業嚴謹</option>
+            <option>故事性</option>
+            <option>生活化</option>
+            <option>激勵人心</option>
+          </select>
+          <span class="select-or">或</span>
+          <input type="text" name="style" placeholder="自訂風格">
+        </div>
+        <label>段落數/結構</label>
+        <input type="text" name="structure" placeholder="如：引言、三段主體、結論">
+        <label>其他需求</label>
+        <input type="text" name="extra" placeholder="如：結尾呼籲行動、口語化語氣">
+        <button type="submit">產生Prompt</button>
+      </form>
+      <div class="prompt-output-block" id="output-script" style="display:none;">
+        <button class="copy-btn" onclick="copyPrompt('output-script')">複製</button>
+        <pre id="prompt-script" style="white-space:pre-wrap;"></pre>
+      </div>
+    </div>
+    <!-- 文生圖片 -->
+    <div class="generator-block" id="tab-image" style="display:none;">
+      <form class="generator-form" id="form-image">
+        <label>主題/內容</label>
+        <input type="text" name="content" placeholder="如：一隻貓在菜市場" required>
+        <label>風格</label>
+        <div class="select-row">
+          <select name="style_s">
+            <option value="">請選擇</option>
+            <option>3D</option>
+            <option>卡通</option>
+            <option>寫實</option>
+            <option>水彩</option>
+            <option>像素風</option>
+            <option>賽博龐克</option>
+            <option>未來感</option>
+          </select>
+          <span class="select-or">或</span>
+          <input type="text" name="style" placeholder="自訂風格">
+        </div>
+        <label>色調/氛圍</label>
+        <div class="select-row">
+          <select name="tone_s">
+            <option value="">請選擇</option>
+            <option>科技感</option>
+            <option>明亮</option>
+            <option>溫暖</option>
+            <option>冷色調</option>
+            <option>活潑</option>
+            <option>神秘</option>
+          </select>
+          <span class="select-or">或</span>
+          <input type="text" name="tone" placeholder="自訂氛圍/色調">
+        </div>
+        <label>細節/元素</label>
+        <input type="text" name="details" placeholder="如：菜市場買菜">
+        <label>比例/解析度 (選填)</label>
+        <div class="select-row">
+          <select name="ratio_s">
+            <option value="">請選擇</option>
+            <option>16:9</option>
+            <option>4:3</option>
+            <option>1:1</option>
+            <option>9:16</option>
+            <option>2.39:1</option>
+            <option>4K</option>
+            <option>8K</option>
+          </select>
+          <span class="select-or">或</span>
+          <input type="text" name="ratio" placeholder="自訂比例/解析度(如：16:9, 4K)">
+        </div>
+        <button type="submit">產生Prompt</button>
+      </form>
+      <div class="prompt-output-block" id="output-image" style="display:none;">
+        <button class="copy-btn" onclick="copyPrompt('output-image')">複製</button>
+        <pre id="prompt-image" style="white-space:pre-wrap;"></pre>
+      </div>
+    </div>
+    <!-- 文生影片 -->
+    <div class="generator-block" id="tab-video" style="display:none;">
+      <form class="generator-form" id="form-video">
+        <label>主題/片段描述</label>
+        <input type="text" name="content" placeholder="如：AI老師在教室中互動" required>
+        <label>影片長度</label>
+        <input type="text" name="duration" placeholder="如：10秒、30秒">
+        <label>畫面風格</label>
+        <div class="select-row">
+          <select name="style_s">
+            <option value="">請選擇</option>
+            <option>動畫</option>
+            <option>寫實</option>
+            <option>未來感</option>
+            <option>卡通</option>
+            <option>懷舊</option>
+            <option>新聞感</option>
+          </select>
+          <span class="select-or">或</span>
+          <input type="text" name="style" placeholder="自訂風格">
+        </div>
+        <label>動作/事件</label>
+        <input type="text" name="action" placeholder="如：AI老師寫黑板、學生舉手發問">
+        <label>鏡頭運動</label>
+        <div class="select-row">
+          <select name="camera_s">
+            <option value="">請選擇</option>
+            <option>固定鏡頭</option>
+            <option>平移</option>
+            <option>特寫</option>
+            <option>拉遠</option>
+            <option>旋轉</option>
+            <option>跟拍</option>
+            <option>俯瞰</option>
+          </select>
+          <span class="select-or">或</span>
+          <input type="text" name="camera" placeholder="自訂鏡頭運動">
+        </div>
+        <button type="submit">產生Prompt</button>
+      </form>
+      <div class="prompt-output-block" id="output-video" style="display:none;">
+        <button class="copy-btn" onclick="copyPrompt('output-video')">複製</button>
+        <pre id="prompt-video" style="white-space:pre-wrap;"></pre>
+      </div>
+    </div>
+    <!-- 影片AI Agent執行生成器 -->
+    <div class="generator-block" id="tab-agent" style="display:none;">
+      <form class="generator-form" id="form-agent">
+        <label>主題</label>
+        <input type="text" name="topic" placeholder="如：AI助教帶你認識生成式AI" required>
+        <label>目標觀眾</label>
+        <input type="text" name="audience" placeholder="如：大學生、企業培訓">
+        <label>影片長度</label>
+        <input type="text" name="duration" placeholder="如：2分鐘">
+        <label>影片風格</label>
+        <div class="select-row">
+          <select name="style_s">
+            <option value="">請選擇</option>
+            <option>動畫</option>
+            <option>寫實</option>
+            <option>新聞感</option>
+            <option>故事性</option>
+            <option>簡約現代</option>
+          </select>
+          <span class="select-or">或</span>
+          <input type="text" name="style" placeholder="自訂風格">
+        </div>
+        <label>需求描述</label>
+        <textarea name="extra" placeholder="如：每段需有對白+旁白，影片分為三段，最後總結。"></textarea>
+        <button type="submit">產生AI Agent執行Prompt</button>
+      </form>
+      <div class="prompt-output-block" id="output-agent" style="display:none;">
+        <button class="copy-btn" onclick="copyPrompt('output-agent')">複製</button>
+        <pre id="prompt-agent" style="white-space:pre-wrap;"></pre>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Tab切換
+    const tabs = document.querySelectorAll('.generator-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelectorAll('.generator-block').forEach(block => block.style.display = 'none');
+        document.getElementById('tab-' + this.dataset.tab).style.display = '';
+      });
+    });
+    // 預設顯示第一個
+    document.querySelector('.generator-tab.active').click();
+
+    // 文生腳本 Prompt
+    document.getElementById('form-script').onsubmit = function(e){
+      e.preventDefault();
+      const topic = this.topic.value.trim();
+      const audience = this.audience.value.trim();
+      const style = (this.style.value.trim() || this.style_s.value);
+      const structure = this.structure.value.trim();
+      const extra = this.extra.value.trim();
+      let zh = `請根據以下需求，幫我生成一份影片腳本：\n`;
+      if(topic) zh += `主題：${topic}\n`;
+      if(audience) zh += `目標觀眾：${audience}\n`;
+      if(style) zh += `風格：${style}\n`;
+      if(structure) zh += `段落結構：${structure}\n`;
+      if(extra) zh += `其他需求：${extra}\n`;
+      zh += `請依據上述資訊，生成有分段、對白、旁白的完整腳本。`;
+
+      let en = `Please generate a video script based on the following requirements:\n`;
+      if(topic) en += `Topic: ${topic}\n`;
+      if(audience) en += `Audience: ${audience}\n`;
+      if(style) en += `Style: ${style}\n`;
+      if(structure) en += `Structure: ${structure}\n`;
+      if(extra) en += `Other requirements: ${extra}\n`;
+      en += `Please provide a complete script with sections, dialogue, and narration.`;
+
+      document.getElementById('prompt-script').textContent = zh + "\n\n" + en;
+      document.getElementById('output-script').style.display = '';
+    };
+
+    // 文生圖片 Prompt（中英文雙語）
+    document.getElementById('form-image').onsubmit = function(e){
+      e.preventDefault();
+      const content = this.content.value.trim();
+      const style = (this.style.value.trim() || this.style_s.value);
+      const tone = (this.tone.value.trim() || this.tone_s.value);
+      const details = this.details.value.trim();
+      const ratio = (this.ratio.value.trim() || this.ratio_s.value);
+
+      // 中文描述
+      let zh = `請生成一張圖片：主題是${content}`;
+      if(style) zh += `，風格為${style}`;
+      if(tone) zh += `，整體色調具有${tone}`;
+      if(details) zh += `，細節包含${details}`;
+      if(ratio) zh += `，比例/解析度：${ratio}`;
+      zh += `。請用於AI繪圖生成。`;
+
+      // 英文描述
+      let en = `Please generate an image: The subject is ${content}`;
+      if(style) en += `, style: ${style}`;
+      if(tone) en += `, overall tone: ${tone}`;
+      if(details) en += `, details: ${details}`;
+      if(ratio) en += `, aspect ratio/resolution: ${ratio}`;
+      en += `. For AI image generation.`;
+
+      document.getElementById('prompt-image').textContent = zh + "\n\n" + en;
+      document.getElementById('output-image').style.display = '';
+    };
+
+    // 文生影片 Prompt（中英文雙語）
+    document.getElementById('form-video').onsubmit = function(e){
+      e.preventDefault();
+      const content = this.content.value.trim();
+      const duration = this.duration.value.trim();
+      const style = (this.style.value.trim() || this.style_s.value);
+      const action = this.action.value.trim();
+      const camera = (this.camera.value.trim() || this.camera_s.value);
+
+      let zh = `請根據以下需求生成影片片段描述：\n`;
+      if(content) zh += `主題/內容：${content}\n`;
+      if(duration) zh += `時長：${duration}\n`;
+      if(style) zh += `畫面風格：${style}\n`;
+      if(action) zh += `動作/事件：${action}\n`;
+      if(camera) zh += `鏡頭運動：${camera}\n`;
+      zh += `用於AI影片生成，請描述畫面細節與動態。`;
+
+      let en = `Please generate a video segment description based on the following:\n`;
+      if(content) en += `Subject/Content: ${content}\n`;
+      if(duration) en += `Duration: ${duration}\n`;
+      if(style) en += `Style: ${style}\n`;
+      if(action) en += `Action/Event: ${action}\n`;
+      if(camera) en += `Camera movement: ${camera}\n`;
+      en += `For AI video generation, please describe the visual details and dynamics.`;
+
+      document.getElementById('prompt-video').textContent = zh + "\n\n" + en;
+      document.getElementById('output-video').style.display = '';
+    };
+
+    // 影片AI Agent執行生成器 Prompt（中英文雙語）
+    document.getElementById('form-agent').onsubmit = function(e){
+      e.preventDefault();
+      const topic = this.topic.value.trim();
+      const audience = this.audience.value.trim();
+      const duration = this.duration.value.trim();
+      const style = (this.style.value.trim() || this.style_s.value);
+      const extra = this.extra.value.trim();
+
+      let zh = `請你扮演AI影片製作Agent，根據下列主題與需求，依據標準AI影片製作流程，自動規劃並生成：\n1. 影片腳本\n2. 每段畫面AI繪圖Prompt\n3. 每段AI影片生成Prompt\n4. 每段旁白內容，並標註角色與語氣\n\n`;
+      if(topic) zh += `主題：${topic}\n`;
+      if(audience) zh += `目標觀眾：${audience}\n`;
+      if(duration) zh += `影片長度：${duration}\n`;
+      if(style) zh += `影片風格：${style}\n`;
+      if(extra) zh += `其他需求：${extra}\n`;
+      zh += `請依據上述資訊，產製一組可直接投入生成的AI影片任務內容（腳本、圖片Prompt、影片Prompt、旁白），格式清晰易複製。`;
+
+      let en = `Act as an AI video production agent. According to the following topic and requirements, based on the standard AI video production process, automatically plan and generate:\n1. Video script\n2. AI image prompt for each segment\n3. AI video prompt for each segment\n4. Narration for each segment, with character and tone marked\n\n`;
+      if(topic) en += `Topic: ${topic}\n`;
+      if(audience) en += `Target audience: ${audience}\n`;
+      if(duration) en += `Video length: ${duration}\n`;
+      if(style) en += `Video style: ${style}\n`;
+      if(extra) en += `Other requirements: ${extra}\n`;
+      en += `Please generate a complete set of AI video tasks (script, image prompt, video prompt, narration) ready for use, with clear and copy-friendly formatting.`;
+
+      document.getElementById('prompt-agent').textContent = zh + "\n\n" + en;
+      document.getElementById('output-agent').style.display = '';
+    };
+
+    // 複製
+    function copyPrompt(blockId) {
+      const text = document.querySelector('#'+blockId+' pre').textContent;
+      navigator.clipboard.writeText(text);
+    }
+  </script>
+</body>
+</html>
