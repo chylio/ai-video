@@ -13,7 +13,7 @@
       --morandi-green-lighter: #e2ede9;
       --morandi-blue: #6d8c99;
       --morandi-blue-strong: #2a3e96;
-      --morandi-bg: #f6f7f5;
+      --morandi-bg: #fdfbf6;
       --morandi-block: #dde5e0;
       --morandi-block-title: #557d6b;
       --morandi-accent: #b4d2c2;
@@ -27,66 +27,60 @@
       font-family: 'Noto Sans TC', sans-serif;
       background: var(--morandi-bg);
       margin: 0;
+      overflow-x: hidden;
+      position: relative;
+    }
+    #tsparticles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
     .main-navbar {
       width: 100%;
-      background: var(--morandi-green-dark);
-      color: #fff;
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      color: #1B5E20;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      padding: 0 0 0 10px;
-      min-height: 48px;
-      border-radius: 8px 8px 0 0;
-      box-sizing: border-box;
+      padding: 0.8rem 1.5rem;
+      border-bottom: 1px solid #E0E0E0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
     .main-navbar .nav-logo {
-      font-size: 2.2em;
+      font-size: 1.5rem;
       font-weight: 700;
-      color: #fff;
-      margin-right: 28px;
-      letter-spacing: 1.5px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.07);
+      color: #2E7D32;
       text-decoration: none;
-      line-height: 1.1;
-      font-family: 'Noto Sans TC', sans-serif;
-      padding: 0 8px 0 4px;
       display: flex;
       align-items: center;
     }
-    .main-navbar .nav-links {
+    .nav-links {
       display: flex;
-      gap: 18px;
-      margin-top: 3px;
+      gap: 1.2rem;
     }
-    .main-navbar .nav-links a {
-      color: #fff;
+    .nav-links a {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #4CAF50;
       text-decoration: none;
-      font-size: 1.25em;
-      font-weight: 700;
-      padding: 2px 14px;
-      border-radius: 8px;
-      transition: background 0.15s, color 0.13s;
-      letter-spacing: 0.5px;
-      margin: 0 2px;
-      display: inline-block;
+      padding-bottom: 3px;
+      transition: all 0.3s ease;
     }
-    .main-navbar .nav-links a.active,
-    .main-navbar .nav-links a:hover {
-      background: var(--morandi-green-light);
-      color: var(--morandi-green-dark);
-    }
-    @media (max-width: 900px) {
-      .main-navbar { flex-direction: column; align-items: flex-start; min-height: unset; padding: 0 0 0 6px;}
-      .main-navbar .nav-logo { font-size: 1.3em; margin-bottom: 4px;}
-      .main-navbar .nav-links { gap: 8px; flex-wrap: wrap;}
-      .main-navbar .nav-links a { font-size: 1em; }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #1B5E20;
+      border-bottom: 2px solid #1B5E20;
     }
     .container {
       max-width: 1100px;
       margin: 32px auto 0 auto;
       padding: 0 16px 40px 16px;
     }
-
     h1, h2 {
       color: var(--morandi-blue);
       margin-top: 32px;
@@ -94,7 +88,6 @@
       font-weight: 800;
       letter-spacing: 2px;
     }
-
     /* 工具分類區塊 */
     .tool-category-flexboard {
       display: flex;
@@ -169,7 +162,6 @@
       .category-col { max-width: 98vw; width: 96vw;}
       .category-title { font-size: 1.08em;}
     }
-
     /* 影片平台比較區塊 */
     .compare-section {
       background: linear-gradient(135deg, #f8fafc 80%, #e2ede9 100%);
@@ -188,7 +180,6 @@
       margin-bottom: 30px;
       margin-top: 0;
     }
-
     .platform-compare-cards {
       display: flex;
       flex-wrap: nowrap;
@@ -326,7 +317,6 @@
       line-height: 1.7;
       margin-bottom: 8px;
     }
-    /* 頁腳樣式 */
     .main-footer {
       width: 100%;
       background: var(--morandi-green-dark);
@@ -348,6 +338,8 @@
   </style>
 </head>
 <body>
+  <!-- 粒子動畫背景 -->
+  <div id="tsparticles"></div>
   <!-- 導覽列 -->
   <nav class="main-navbar">
     <a href="index.html" class="nav-logo">AI影片製作指南</a>
@@ -513,7 +505,34 @@
   <footer class="main-footer">
     <span id="footer-year"></span> 奇美醫院教學中心製
   </footer>
+  <!-- tsParticles CDN & 設定 -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script>
+    tsParticles.load("tsparticles", {
+      fullScreen: { enable: false },
+      particles: {
+        number: { value: 80, density: { enable: true, area: 800 } },
+        color: { value: "#88a096" },
+        shape: { type: "circle" },
+        opacity: { value: 0.3 },
+        size: { value: 2 },
+        links: {
+          enable: true,
+          distance: 120,
+          color: "#c6d1c5",
+          opacity: 0.4,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 1,
+          direction: "none",
+          outModes: { default: "bounce" }
+        }
+      },
+      background: { color: "#fdfbf6" },
+      detectRetina: true
+    });
     // 導覽列 active 標示（自動化，請套用到所有頁面！）
     document.querySelectorAll('.nav-links a').forEach(link => {
       const href = link.getAttribute('href');
