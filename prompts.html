@@ -13,7 +13,7 @@
       --morandi-green-lighter: #e2ede9;
       --morandi-blue: #6d8c99;
       --morandi-grey: #d6d7d9;
-      --morandi-bg: #f6f7f5;
+      --morandi-bg: #fdfbf6;
       --morandi-block: #dde5e0;
       --morandi-block2: #c6d1c5;
       --morandi-block-title: #557d6b;
@@ -23,59 +23,54 @@
       font-family: 'Noto Sans TC', sans-serif;
       background: var(--morandi-bg);
       margin: 0;
+      overflow-x: hidden;
+      position: relative;
+    }
+    #tsparticles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
     }
     .main-navbar {
       width: 100%;
-      background: var(--morandi-green-dark);
-      color: #fff;
+      background: #ffffffcc;
+      backdrop-filter: blur(10px);
+      color: #1B5E20;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      padding: 0 0 0 10px;
-      min-height: 48px;
-      border-radius: 8px 8px 0 0;
-      box-sizing: border-box;
+      padding: 0.8rem 1.5rem;
+      border-bottom: 1px solid #E0E0E0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
     .main-navbar .nav-logo {
-      font-size: 2.2em;
+      font-size: 1.5rem;
       font-weight: 700;
-      color: #fff;
-      margin-right: 28px;
-      letter-spacing: 1.5px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.07);
+      color: #2E7D32;
       text-decoration: none;
-      line-height: 1.1;
-      font-family: 'Noto Sans TC', sans-serif;
-      padding: 0 8px 0 4px;
       display: flex;
       align-items: center;
     }
-    .main-navbar .nav-links {
+    .nav-links {
       display: flex;
-      gap: 18px;
-      margin-top: 3px;
+      gap: 1.2rem;
     }
-    .main-navbar .nav-links a {
-      color: #fff;
+    .nav-links a {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #4CAF50;
       text-decoration: none;
-      font-size: 1.25em;
-      font-weight: 700;
-      padding: 2px 14px;
-      border-radius: 8px;
-      transition: background 0.15s, color 0.13s;
-      letter-spacing: 0.5px;
-      margin: 0 2px;
-      display: inline-block;
+      padding-bottom: 3px;
+      transition: all 0.3s ease;
     }
-    .main-navbar .nav-links a.active,
-    .main-navbar .nav-links a:hover {
-      background: var(--morandi-green-light);
-      color: var(--morandi-green-dark);
-    }
-    @media (max-width: 900px) {
-      .main-navbar { flex-direction: column; align-items: flex-start; min-height: unset; padding: 0 0 0 6px;}
-      .main-navbar .nav-logo { font-size: 1.3em; margin-bottom: 4px;}
-      .main-navbar .nav-links { gap: 8px; flex-wrap: wrap;}
-      .main-navbar .nav-links a { font-size: 1em; }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #1B5E20;
+      border-bottom: 2px solid #1B5E20;
     }
     .container {
       max-width: 900px;
@@ -152,7 +147,6 @@
       border-left: 4px solid var(--morandi-green);
       white-space: pre-line;
     }
-    /* 頁腳樣式 */
     .main-footer {
       width: 100%;
       background: var(--morandi-green-dark);
@@ -175,6 +169,8 @@
   </style>
 </head>
 <body>
+  <!-- 粒子動畫背景 -->
+  <div id="tsparticles"></div>
   <!-- 導覽列 -->
   <nav class="main-navbar">
     <a href="index.html" class="nav-logo">AI影片製作指南</a>
@@ -194,21 +190,18 @@
     <p class="prompt-desc">
       在生成式AI影片製作流程中，「提示詞」（Prompt）設計是決定生成結果品質的關鍵。不同階段可採用不同的結構，以下為常見結構：
     </p>
-
     <div class="prompt-block">
       <div class="block-title"><span class="icon">📝</span>文生腳本 Prompt</div>
       <div class="structure">
         結構：對象 + 語氣 + 格式 + 段落內容。
       </div>
     </div>
-
     <div class="prompt-block">
       <div class="block-title"><span class="icon">🖼️</span>文生圖像 Prompt</div>
       <div class="structure">
         結構：主角 + 動作 + 場景 + 風格 + 用途。
       </div>
     </div>
-
     <div class="prompt-block">
       <div class="block-title"><span class="icon">🎬</span>文生影片 Prompt</div>
       <div class="structure">
@@ -219,8 +212,35 @@
   <footer class="main-footer">
     <span id="footer-year"></span> 奇美醫院教學中心製
   </footer>
+  <!-- tsParticles CDN & 設定 -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script>
-    // 導覽列 active 標示（更健壯版本，請複製到所有頁面）
+    tsParticles.load("tsparticles", {
+      fullScreen: { enable: false },
+      particles: {
+        number: { value: 80, density: { enable: true, area: 800 } },
+        color: { value: "#88a096" },
+        shape: { type: "circle" },
+        opacity: { value: 0.3 },
+        size: { value: 2 },
+        links: {
+          enable: true,
+          distance: 120,
+          color: "#c6d1c5",
+          opacity: 0.4,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 1,
+          direction: "none",
+          outModes: { default: "bounce" }
+        }
+      },
+      background: { color: "#fdfbf6" },
+      detectRetina: true
+    });
+    // 導覽列 active 標示
     document.querySelectorAll('.nav-links a').forEach(link => {
       const href = link.getAttribute('href');
       if (
