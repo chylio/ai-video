@@ -85,50 +85,51 @@
       font-size: 14px;
     }
 
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+      padding: 30px 24px;
+      max-width: 700px;
+      margin: 32px auto;
+      transition: box-shadow 0.2s;
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.6em;
+      color: #5B7D5A;
+    }
+    .card h3 {
+      margin-bottom: 12px;
+      color: #7FB77E;
+    }
+    .card ul {
+      list-style: none;
+      padding: 0;
+    }
+    .card ul li {
+      margin-bottom: 10px;
+      padding-left: 1.2em;
+      position: relative;
+    }
+    .card ul li:before {
+      content: "•";
+      color: #A0C49D;
+      position: absolute;
+      left: 0;
+      font-size: 1.2em;
+    }
+
     @media (max-width: 600px) {
       button {
         font-size: 12px;
         padding: 8px 12px;
       }
     }
- .card {
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 3px 14px rgba(0,0,0,0.08);
-  padding: 30px 24px;
-  max-width: 700px;
-  margin: 32px auto;
-  transition: box-shadow 0.2s;
-}
-.card h2 {
-  margin-top: 0;
-  font-size: 1.6em;
-  color: #5B7D5A;
-}
-.card h3 {
-  margin-bottom: 12px;
-  color: #7FB77E;
-}
-.card ul {
-  list-style: none;
-  padding: 0;
-}
-.card ul li {
-  margin-bottom: 10px;
-  padding-left: 1.2em;
-  position: relative;
-}
-.card ul li:before {
-  content: "•";
-  color: #A0C49D;
-  position: absolute;
-  left: 0;
-  font-size: 1.2em;
-}
   </style>
 </head>
-<body>
 
+<body>
   <h1>生成式AI影片操作指南</h1>
 
   <nav>
@@ -136,86 +137,3 @@
     <button onclick="showSection('concepts')">核心概念</button>
     <button onclick="showSection('workflow')">製作流程</button>
     <button onclick="showSection('tools')">相關工具</button>
-    <button onclick="showSection('prompts')">提示詞結構</button>
-    <button onclick="showSection('consistency')">素材一致性</button>
-    <button onclick="showSection('custom')">客製化prompt 輸入區</button>
-  </nav>
-
-  <section id="home" class="active">
-  <div class="card">
-    <h2>生成式AI影片製作簡介</h2>
-    <p>
-      生成式AI影片製作是指利用人工智慧技術，自動生成或輔助製作影片內容的過程。這包括從腳本撰寫、圖像生成、音頻合成到後期編輯等各個環節。AI技術的介入，極大地提高了影片製作的效率，降低了成本，並為創意表達提供了新的可能性。
-    </p>
-    <h3>主要應用領域</h3>
-    <ul>
-      <li><strong>內容創作：</strong>快速生成短影片、廣告、社群媒體內容。</li>
-      <li><strong>教育培訓：</strong>製作教學影片、課程動畫。</li>
-      <li><strong>行銷宣傳：</strong>個性化行銷影片、產品演示。</li>
-      <li><strong>虛擬實境/擴增實境：</strong>生成虛擬角色、場景。</li>
-    </ul>
-  </div>
-</section>
-
-  <section id="concepts">
-    <h2>核心概念</h2>
-    <p>介紹影片腳本的構成邏輯、節奏與畫面設計的原則。</p>
-  </section>
-
-  <section id="workflow">
-    <h2>製作流程</h2>
-    <p>腳本設計 → 圖像生成 → 配音合成 → 視訊剪輯 → 成片輸出。</p>
-  </section>
-
-  <section id="tools">
-    <h2>相關工具</h2>
-    <p>推薦使用 Runway、Pika、Leonardo、Heygen 等生成式AI影片工具。</p>
-  </section>
-
-  <section id="prompts">
-    <h2>提示詞結構</h2>
-    <p>角色 + 語氣 + 格式 + 段落內容，是一個有效 prompt 的基本架構。</p>
-  </section>
-
-  <section id="consistency">
-    <h2>素材一致性</h2>
-    <p>確保影片中的畫面、語音與旁白風格一致，以維持專業感與敘事流暢。</p>
-  </section>
-
-  <section id="custom">
-    <h2>客製化prompt 輸入區</h2>
-    <label for="scriptPrompt">影片腳本提示詞</label>
-    <textarea id="scriptPrompt" placeholder="輸入腳本提示詞"></textarea>
-
-    <label for="imagePrompt">圖像生成提示詞</label>
-    <textarea id="imagePrompt" placeholder="輸入圖像提示詞"></textarea>
-
-    <label for="narrationPrompt">旁白生成提示詞</label>
-    <textarea id="narrationPrompt" placeholder="輸入旁白提示詞"></textarea>
-
-    <button onclick="generate()">產出內容</button>
-    <div id="results" class="result"></div>
-  </section>
-
-  <script>
-    function showSection(id) {
-      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-
-    function generate() {
-      const script = document.getElementById('scriptPrompt').value;
-      const image = document.getElementById('imagePrompt').value;
-      const narr = document.getElementById('narrationPrompt').value;
-
-      let html = '';
-      if (script) html += `<strong>影片腳本提示：</strong><p>${script}</p>`;
-      if (image) html += `<strong>圖像提示：</strong><p>${image}</p>`;
-      if (narr) html += `<strong>旁白提示：</strong><p>${narr}</p>`;
-
-      document.getElementById('results').innerHTML = html;
-    }
-  </script>
-
-</body>
-</html>
