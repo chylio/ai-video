@@ -38,20 +38,19 @@
       height: 100%;
       z-index: -1;
     }
+    /* 首頁統一版導覽列 */
     .main-navbar {
-      width: 100%;
-      background: #ffffffcc;
-      backdrop-filter: blur(10px);
+      background-color: #ffffffcc; /* 微透明白 */
+      backdrop-filter: blur(6px);
       color: #1B5E20;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.8rem 1.5rem;
+      padding: 1rem 2rem;
       border-bottom: 1px solid #E0E0E0;
       position: sticky;
       top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      z-index: 10;
     }
     .main-navbar .nav-logo {
       font-size: 1.5rem;
@@ -63,15 +62,14 @@
     }
     .nav-links {
       display: flex;
-      gap: 1.2rem;
     }
     .nav-links a {
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: #4CAF50;
+      margin-left: 1.5rem;
       text-decoration: none;
-      padding-bottom: 3px;
-      transition: all 0.3s ease;
+      color: #4CAF50;
+      font-weight: 500;
+      transition: all 0.3s;
+      padding-bottom: 4px;
     }
     .nav-links a:hover,
     .nav-links a.active {
