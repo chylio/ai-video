@@ -92,6 +92,40 @@
       }
     }
   </style>
+  .card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.08);
+  padding: 30px 24px;
+  max-width: 700px;
+  margin: 32px auto;
+  transition: box-shadow 0.2s;
+}
+.card h2 {
+  margin-top: 0;
+  font-size: 1.6em;
+  color: #5B7D5A;
+}
+.card h3 {
+  margin-bottom: 12px;
+  color: #7FB77E;
+}
+.card ul {
+  list-style: none;
+  padding: 0;
+}
+.card ul li {
+  margin-bottom: 10px;
+  padding-left: 1.2em;
+  position: relative;
+}
+.card ul li:before {
+  content: "•";
+  color: #A0C49D;
+  position: absolute;
+  left: 0;
+  font-size: 1.2em;
+}
 </head>
 <body>
 
@@ -108,9 +142,20 @@
   </nav>
 
   <section id="home" class="active">
-    <h2>首頁</h2>
-    <p>歡迎使用生成式AI影片操作指南。本指南將帶您了解如何利用AI工具製作影片。</p>
-  </section>
+  <div class="card">
+    <h2>生成式AI影片製作簡介</h2>
+    <p>
+      生成式AI影片製作是指利用人工智慧技術，自動生成或輔助製作影片內容的過程。這包括從腳本撰寫、圖像生成、音頻合成到後期編輯等各個環節。AI技術的介入，極大地提高了影片製作的效率，降低了成本，並為創意表達提供了新的可能性。
+    </p>
+    <h3>主要應用領域</h3>
+    <ul>
+      <li><strong>內容創作：</strong>快速生成短影片、廣告、社群媒體內容。</li>
+      <li><strong>教育培訓：</strong>製作教學影片、課程動畫。</li>
+      <li><strong>行銷宣傳：</strong>個性化行銷影片、產品演示。</li>
+      <li><strong>虛擬實境/擴增實境：</strong>生成虛擬角色、場景。</li>
+    </ul>
+  </div>
+</section>
 
   <section id="concepts">
     <h2>核心概念</h2>
