@@ -455,6 +455,21 @@
           <span class="select-or">或</span>
           <input type="text" name="style" placeholder="自訂風格">
         </div>
+        <label>比例/解析度 (選填)</label>
+        <div class="select-row">
+          <select name="ratio_s">
+            <option value="">請選擇</option>
+            <option>16:9</option>
+            <option>4:3</option>
+            <option>1:1</option>
+            <option>9:16</option>
+            <option>2.39:1</option>
+            <option>4K</option>
+            <option>8K</option>
+          </select>
+          <span class="select-or">或</span>
+          <input type="text" name="ratio" placeholder="自訂比例/解析度(如：16:9, 4K)">
+        </div>
         <label>需求描述</label>
         <textarea name="extra" placeholder="如：每段需有對白+旁白，影片分為三段，最後總結。"></textarea>
         <button type="submit">產生AI Agent執行Prompt</button>
@@ -599,13 +614,14 @@
       document.getElementById('output-video').style.display = '';
     };
 
-    // 影片AI Agent執行生成器 Prompt（中英文雙語）
+    // 影片AI Agent執行生成器 Prompt（中英文雙語）含比例/解析度
     document.getElementById('form-agent').onsubmit = function(e){
       e.preventDefault();
       const topic = this.topic.value.trim();
       const audience = this.audience.value.trim();
       const duration = this.duration.value.trim();
       const style = (this.style.value.trim() || this.style_s.value);
+      const ratio = (this.ratio.value.trim() || this.ratio_s.value);
       const extra = this.extra.value.trim();
 
       let zh = `請你扮演AI影片製作Agent，根據下列主題與需求，依據標準AI影片製作流程，自動規劃並生成：\n1. 影片腳本\n2. 每段畫面AI繪圖Prompt\n3. 每段AI影片生成Prompt\n4. 每段旁白內容，並標註角色與語氣\n\n`;
@@ -613,6 +629,7 @@
       if(audience) zh += `目標觀眾：${audience}\n`;
       if(duration) zh += `影片長度：${duration}\n`;
       if(style) zh += `影片風格：${style}\n`;
+      if(ratio) zh += `比例/解析度：${ratio}\n`;
       if(extra) zh += `其他需求：${extra}\n`;
       zh += `請依據上述資訊，產製一組可直接投入生成的AI影片任務內容（腳本、圖片Prompt、影片Prompt、旁白），格式清晰易複製。`;
 
@@ -621,6 +638,7 @@
       if(audience) en += `Target audience: ${audience}\n`;
       if(duration) en += `Video length: ${duration}\n`;
       if(style) en += `Video style: ${style}\n`;
+      if(ratio) en += `Aspect ratio/resolution: ${ratio}\n`;
       if(extra) en += `Other requirements: ${extra}\n`;
       en += `Please generate a complete set of AI video tasks (script, image prompt, video prompt, narration) ready for use, with clear and copy-friendly formatting.`;
 
