@@ -229,6 +229,20 @@
       font-size: 1em;
       color: #888;
     }
+    /* 頁腳樣式 */
+    .main-footer {
+      width: 100%;
+      background: var(--morandi-green-dark);
+      color: #fff;
+      text-align: center;
+      padding: 18px 0 12px 0;
+      font-size: 1.08em;
+      font-family: 'Noto Sans TC', sans-serif;
+      letter-spacing: 1px;
+      margin-top: 40px;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 -2px 12px #b7c4b133;
+    }
     @media (max-width:600px) {
       .container { padding: 0 2vw; }
       .custom-title { font-size: 1.3em;}
@@ -447,6 +461,9 @@
       </div>
     </div>
   </div>
+  <footer class="main-footer">
+    <span id="footer-year"></span> 奇美醫院教學中心製
+  </footer>
   <script>
     // Tab切換
     const tabs = document.querySelectorAll('.generator-tab');
@@ -604,6 +621,8 @@
         link.classList.add('active');
       }
     });
+    // 自動插入年份到頁腳
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
