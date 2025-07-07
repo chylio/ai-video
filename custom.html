@@ -302,6 +302,7 @@
         <label>其他需求</label>
         <input type="text" name="extra" placeholder="如：結尾呼籲行動、口語化語氣">
         <button type="submit">產生Prompt</button>
+        <button type="button" onclick="resetForm(this)">重置</button>
       </form>
       <div class="prompt-output-block" id="output-script" style="display:none;">
         <button class="copy-btn" onclick="copyPrompt('output-script')">複製</button>
@@ -360,6 +361,7 @@
           <input type="text" name="ratio" placeholder="自訂比例/解析度(如：16:9, 4K)">
         </div>
         <button type="submit">產生Prompt</button>
+        <button type="button" onclick="resetForm(this)">重置</button>
       </form>
       <div class="prompt-output-block" id="output-image" style="display:none;">
         <button class="copy-btn" onclick="copyPrompt('output-image')">複製</button>
@@ -405,6 +407,7 @@
           <input type="text" name="camera" placeholder="自訂鏡頭運動">
         </div>
         <button type="submit">產生Prompt</button>
+        <button type="button" onclick="resetForm(this)">重置</button>
       </form>
       <div class="prompt-output-block" id="output-video" style="display:none;">
         <button class="copy-btn" onclick="copyPrompt('output-video')">複製</button>
@@ -436,6 +439,7 @@
         <label>需求描述</label>
         <textarea name="extra" placeholder="如：每段需有對白+旁白，影片分為三段，最後總結。"></textarea>
         <button type="submit">產生AI Agent執行Prompt</button>
+        <button type="button" onclick="resetForm(this)">重置</button>
       </form>
       <div class="prompt-output-block" id="output-agent" style="display:none;">
         <button class="copy-btn" onclick="copyPrompt('output-agent')">複製</button>
@@ -576,6 +580,17 @@
     function copyPrompt(blockId) {
       const text = document.querySelector('#'+blockId+' pre').textContent;
       navigator.clipboard.writeText(text);
+    }
+
+    // 重置
+    function resetForm(btn) {
+      const form = btn.closest('form');
+      form.reset();
+      const block = form.closest('.generator-block');
+      if (block) {
+        const output = block.querySelector('.prompt-output-block');
+        if (output) output.style.display = 'none';
+      }
     }
   </script>
 </body>
