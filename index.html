@@ -130,8 +130,8 @@
 
     .main-footer {
       width: 100%;
-      background: #587b6a;
-      color: #fff;
+      /* background: #587b6a;  刪除綠色底色 */
+      color: #222;
       text-align: center;
       padding: 18px 0 12px 0;
       font-size: 1.08em;
@@ -141,6 +141,30 @@
       box-shadow: 0 -2px 12px #b7c4b133;
       flex-shrink: 0;
       margin-top: auto;
+      background: transparent;
+    }
+
+    /* === 浮水印樣式 === */
+    .watermark {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 99;
+      font-size: 0.95em;
+      color: #bdbdbd; /* 淺灰色 */
+      background: rgba(255,255,255,0.18);
+      padding: 6px 13px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px #9de2a133;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s;
+      font-family: 'Noto Sans TC', sans-serif;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+    .watermark.visible {
+      opacity: 1;
     }
 
     /* === 手機RWD：導覽列變漢堡 === */
@@ -206,6 +230,13 @@
       /* 將主內容往下推防止遮擋 */
       .container {
         z-index: 1;
+      }
+      /* 浮水印 RWD */
+      .watermark {
+        right: 8px;
+        bottom: 8px;
+        font-size: 0.9em;
+        padding: 5px 10px;
       }
     }
   </style>
@@ -288,8 +319,11 @@
   </div>
 
   <footer class="main-footer">
-    <span id="footer-year"></span> 奇美醫院教學中心製
+    <!-- 已移除年份及製作者說明，移至浮水印 -->
   </footer>
+
+  <!-- ✅ 浮水印 -->
+  <div class="watermark" id="watermark">2025 奇美醫院教學中心 吳曉琪製</div>
 
   <!-- ✅ tsParticles 載入與設定 -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
@@ -335,8 +369,6 @@
         link.classList.add('active');
       }
     });
-    // 自動插入年份到頁腳
-    document.getElementById('footer-year').textContent = new Date().getFullYear();
 
     // === 新增：漢堡選單開關 ===
     const navToggle = document.querySelector('.nav-toggle');
@@ -352,6 +384,21 @@
         navToggle.classList.remove('open');
       });
     });
+
+    // === 浮水印顯示控制：滑到底才顯示 ===
+    function checkWatermark() {
+      const watermark = document.getElementById('watermark');
+      // 判斷是否滑到底（視窗底部 >= 文件高度 - 2px 容差）
+      if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 2)) {
+        watermark.classList.add('visible');
+      } else {
+        watermark.classList.remove('visible');
+      }
+    }
+    window.addEventListener('scroll', checkWatermark);
+    window.addEventListener('resize', checkWatermark);
+    // 初始檢查
+    checkWatermark();
   </script>
 </body>
 </html>
