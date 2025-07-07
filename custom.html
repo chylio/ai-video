@@ -18,16 +18,21 @@
       <a href="prompts.html">Prompt結構</a>
       <a href="workflow.html">製作流程</a>
       <a href="tools.html">工具平台</a>
-      <a href="custom.html" class="active">Prompt生成器</a>
+      <a href="custom.html">Prompt生成器</a>
     </div>
   </nav>
   <div class="container">
     <!-- ...你的原始內容... -->
   </div>
   <script>
-    // 導覽列 active 標示
+    // 導覽列 active 標示（更健壯版本，複製到每個頁面）
     document.querySelectorAll('.nav-links a').forEach(link => {
-      if (location.pathname.endsWith(link.getAttribute('href'))) {
+      const href = link.getAttribute('href');
+      if (
+        location.pathname === '/' + href ||
+        location.pathname.endsWith('/' + href) ||
+        (href === 'index.html' && (location.pathname === '/' || location.pathname.endsWith('/')))
+      ) {
         link.classList.add('active');
       }
     });
