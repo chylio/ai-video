@@ -5,8 +5,333 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>工具平台 | AI影片製作指南</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
-  <!-- (保留原有CSS) -->
-  <!-- ...你的CSS內容... -->
+  <style>
+    :root {
+      --morandi-green-dark: #587b6a;
+      --morandi-green: #88a096;
+      --morandi-green-light: #b7c4b1;
+      --morandi-green-lighter: #e2ede9;
+      --morandi-blue: #6d8c99;
+      --morandi-blue-strong: #2a3e96;
+      --morandi-bg: #f6f7f5;
+      --morandi-block: #dde5e0;
+      --morandi-block-title: #557d6b;
+      --morandi-accent: #b4d2c2;
+      --morandi-yellow: #e6dcb8;
+      --morandi-brown: #665c38;
+      --morandi-sky: #cde3ec;
+      --runway-purple: #9147c1;
+      --pika-orange: #f6a21a;
+    }
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--morandi-bg);
+      margin: 0;
+    }
+    .main-navbar {
+      width: 100%;
+      background: var(--morandi-green-dark);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 0 0 10px;
+      min-height: 48px;
+      border-radius: 8px 8px 0 0;
+      box-sizing: border-box;
+    }
+    .main-navbar .nav-logo {
+      font-size: 2.2em;
+      font-weight: 700;
+      color: #fff;
+      margin-right: 28px;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.07);
+      text-decoration: none;
+      line-height: 1.1;
+      font-family: 'Noto Sans TC', sans-serif;
+      padding: 0 8px 0 4px;
+      display: flex;
+      align-items: center;
+    }
+    .main-navbar .nav-links {
+      display: flex;
+      gap: 18px;
+      margin-top: 3px;
+    }
+    .main-navbar .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.25em;
+      font-weight: 700;
+      padding: 2px 14px;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.13s;
+      letter-spacing: 0.5px;
+      margin: 0 2px;
+      display: inline-block;
+    }
+    .main-navbar .nav-links a.active,
+    .main-navbar .nav-links a:hover {
+      background: var(--morandi-green-light);
+      color: var(--morandi-green-dark);
+    }
+    @media (max-width: 900px) {
+      .main-navbar { flex-direction: column; align-items: flex-start; min-height: unset; padding: 0 0 0 6px;}
+      .main-navbar .nav-logo { font-size: 1.3em; margin-bottom: 4px;}
+      .main-navbar .nav-links { gap: 8px; flex-wrap: wrap;}
+      .main-navbar .nav-links a { font-size: 1em; }
+    }
+    .container {
+      max-width: 1100px;
+      margin: 32px auto 0 auto;
+      padding: 0 16px 40px 16px;
+    }
+
+    h1, h2 {
+      color: var(--morandi-blue);
+      margin-top: 32px;
+      margin-bottom: 18px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    /* 工具分類區塊 */
+    .tool-category-flexboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 38px;
+      margin-top: 38px;
+    }
+    .category-col {
+      background: var(--morandi-block);
+      border-radius: 12px;
+      min-width: 200px;
+      max-width: 230px;
+      padding: 0 0 10px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 2px 8px #b7c4b140;
+      border: 2.5px solid var(--morandi-green-light);
+      transition: box-shadow 0.18s, border 0.18s;
+    }
+    .category-col:hover {
+      box-shadow: 0 6px 24px #b7c4b199;
+      border-color: var(--morandi-blue);
+    }
+    .category-title {
+      background: var(--morandi-green-dark);
+      color: #fff;
+      border-radius: 10px 10px 0 0;
+      width: 100%;
+      text-align: center;
+      font-size: 1.14em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      padding: 13px 0 10px 0;
+      margin-bottom: 0;
+      border-bottom: 2px solid var(--morandi-green-light);
+    }
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 11px;
+      width: 90%;
+      margin: 18px auto 6px auto;
+    }
+    .category-list a {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--morandi-green-dark);
+      text-decoration: none;
+      font-size: 1.04em;
+      font-weight: 500;
+      padding: 3px 0 3px 0;
+      transition: color 0.13s, background 0.13s;
+      border-radius: 4px;
+    }
+    .category-list a:hover {
+      color: var(--morandi-blue);
+      background: var(--morandi-green-lighter);
+    }
+    .category-icon {
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+    }
+    @media (max-width: 900px) {
+      .container { max-width: 99vw; }
+      .tool-category-flexboard { flex-direction: column; gap: 18px; align-items: center;}
+      .category-col { max-width: 98vw; width: 96vw;}
+      .category-title { font-size: 1.08em;}
+    }
+
+    /* 影片平台比較區塊 */
+    .compare-section {
+      background: linear-gradient(135deg, #f8fafc 80%, #e2ede9 100%);
+      padding: 42px 0 38px 0;
+      border-radius: 18px;
+      max-width: 1100px;
+      margin: 48px auto 36px auto;
+      box-shadow: 0 6px 32px #b7c4b133;
+    }
+    .compare-section h2 {
+      text-align: center;
+      color: var(--morandi-blue);
+      font-size: 2em;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      margin-bottom: 30px;
+      margin-top: 0;
+    }
+
+    .platform-compare-cards {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto 32px auto;
+    }
+    .platform-card {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 6px 20px #b7c4b133;
+      padding: 28px 26px 22px 26px;
+      width: 270px;
+      min-width: 200px;
+      border-top: 7px solid var(--morandi-accent);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      transition: box-shadow 0.18s, border-top 0.18s;
+      margin-bottom: 0;
+    }
+    .platform-card.veo { border-top-color: var(--morandi-green-dark); }
+    .platform-card.sora { border-top-color: var(--morandi-blue-strong); }
+    .platform-card.runway { border-top-color: var(--runway-purple); }
+    .platform-card.pika { border-top-color: var(--pika-orange);}
+    .platform-title {
+      font-size: 1.25em;
+      font-weight: 700;
+      margin-bottom: 7px;
+      letter-spacing: 0.7px;
+      line-height: 1.1;
+    }
+    .platform-card.veo .platform-title { color: var(--morandi-green-dark);}
+    .platform-card.sora .platform-title { color: var(--morandi-blue-strong);}
+    .platform-card.runway .platform-title { color: var(--runway-purple);}
+    .platform-card.pika .platform-title { color: var(--pika-orange);}
+    .platform-stars {
+      font-size: 1.15em;
+      color: #f6b800;
+      margin-bottom: 9px;
+      letter-spacing: 1.2px;
+    }
+    .platform-desc {
+      color: #333;
+      font-size: 1.07em;
+      margin-bottom: 0;
+      margin-top: 2px;
+      line-height: 1.65;
+      min-height: 44px;
+    }
+    @media (max-width: 1150px) {
+      .platform-compare-cards { flex-wrap: wrap; gap: 22px; }
+      .platform-card { width: 97vw; max-width: 340px;}
+    }
+    @media (max-width: 900px) {
+      .platform-compare-cards { flex-direction: column; gap: 16px 0; }
+      .platform-card { width: 98vw; max-width: 350px; }
+    }
+    /* 其餘比較區塊（可保留原設計） */
+    .compare-table-block {
+      max-width: 970px;
+      margin: 0 auto 28px auto;
+      padding: 0 12px;
+    }
+    .compare-table-block h3 {
+      color: var(--morandi-blue);
+      font-size: 1.13em;
+      font-weight: 700;
+      margin: 18px 0 14px 0;
+      letter-spacing: 1px;
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1.04em;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px #b7c4b133;
+    }
+    .compare-table thead tr {
+      background: var(--morandi-green-lighter);
+    }
+    .compare-table th, .compare-table td {
+      padding: 8px 6px;
+      text-align: center;
+    }
+    .compare-table tbody tr:nth-child(odd) {
+      background: #f8fafc;
+    }
+    .compare-table tbody tr:nth-child(even) {
+      background: #fff;
+    }
+    .compare-table td {
+      font-weight: 400;
+    }
+    .compare-table .label-veo { color: var(--morandi-green-dark); font-weight: 700;}
+    .compare-table .label-sora { color: var(--morandi-blue-strong); font-weight: 700;}
+    .compare-table .label-runway { color: var(--runway-purple); font-weight: 700;}
+    .compare-table .label-pika { color: var(--pika-orange); font-weight: 700;}
+    .compare-bottom-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px 8vw;
+      padding: 0 7vw 0 7vw;
+      margin-top: 22px;
+    }
+    .compare-bottom-row .col {
+      flex: 1;
+      min-width: 230px;
+    }
+    .compare-bottom-row h3 {
+      color: var(--morandi-blue);
+      font-size: 1.03em;
+      font-weight: 700;
+      margin: 0 0 7px 0;
+      letter-spacing: 1px;
+    }
+    .compare-bottom-row ul {
+      font-size: 1.01em;
+      line-height: 1.7;
+      margin: 0 0 0 18px;
+      padding: 0;
+    }
+    .compare-bottom-row li {
+      margin-bottom: 2px;
+    }
+    .compare-summary {
+      background: var(--morandi-green-lighter);
+      border-radius: 8px;
+      padding: 13px 12px;
+      font-size: 1.01em;
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+    @media (max-width: 900px) {
+      .compare-section { padding: 18px 0 12px 0; max-width: 100vw;}
+      .compare-table-block { max-width: 100vw; padding: 0 2vw;}
+      .compare-bottom-row { padding: 0 2vw 0 2vw; flex-direction: column; gap: 20px 0;}
+    }
+  </style>
 </head>
 <body>
   <!-- 導覽列 -->
@@ -15,19 +340,171 @@
     <div class="nav-links">
       <a href="index.html">首頁</a>
       <a href="concepts.html">核心應用</a>
-      <a href="prompts.html">Prompt結構</a>
+      <a href="prompts.html">提示詞結構</a>
       <a href="workflow.html">製作流程</a>
-      <a href="tools.html" class="active">工具平台</a>
+      <a href="tools.html">工具平台</a>
       <a href="custom.html">Prompt生成器</a>
     </div>
   </nav>
   <div class="container">
-    <!-- ...你的原始內容... -->
+    <h1>AI 生成工具平台分類</h1>
+    <div class="tool-category-flexboard">
+      <!-- 文生圖片 -->
+      <div class="category-col">
+        <div class="category-title">文生圖片</div>
+        <div class="category-list">
+          <a href="https://chat.openai.com/" target="_blank"><span>ChatGPT</span></a>
+          <a href="https://grok.x.ai/" target="_blank"><span>Grok</span></a>
+          <a href="https://www.bing.com/images/create" target="_blank"><span>Bing</span></a>
+          <a href="https://copilot.microsoft.com/" target="_blank"><span>Copilot</span></a>
+          <a href="https://labs.openai.com/" target="_blank"><span>DALL·E</span></a>
+          <a href="https://leonardo.ai/" target="_blank"><span>Leonardo.Ai</span></a>
+          <a href="https://www.dreamina.com/" target="_blank"><span>Dreamina</span></a>
+        </div>
+      </div>
+      <!-- 文生/圖生影片 -->
+      <div class="category-col">
+        <div class="category-title">文生/圖生影片</div>
+        <div class="category-list">
+          <a href="https://runwayml.com/" target="_blank"><span>runway</span></a>
+          <a href="https://openai.com/sora" target="_blank"><span>Sora</span></a>
+          <a href="https://hailuoai.com/" target="_blank"><span>Hailuo AI</span></a>
+          <a href="https://lumalabs.ai/" target="_blank"><span>Luma AI</span></a>
+          <a href="https://kling.tencent.com/" target="_blank"><span>KLING</span></a>
+        </div>
+      </div>
+      <!-- 虛擬人工具 -->
+      <div class="category-col">
+        <div class="category-title">虛擬人工具</div>
+        <div class="category-list">
+          <a href="https://www.d-id.com/" target="_blank"><span>D-ID</span></a>
+          <a href="https://www.heygen.com/" target="_blank"><span>HeyGen</span></a>
+          <a href="https://www.synthesia.io/" target="_blank"><span>synthesia</span></a>
+        </div>
+      </div>
+      <!-- 音樂/影片編輯 -->
+      <div class="category-col">
+        <div class="category-title">音樂/影片編輯</div>
+        <div class="category-list">
+          <a href="https://ttsmaker.com/" target="_blank"><span>TTSMAKER</span></a>
+          <a href="https://www.suno.ai/" target="_blank"><span>Suno</span></a>
+          <a href="https://www.canva.com/" target="_blank"><span>Canva</span></a>
+          <a href="https://clipchamp.com/" target="_blank"><span>Clipchamp</span></a>
+          <a href="https://www.flexclip.com/" target="_blank"><span>flexClip</span></a>
+          <a href="https://www.cutout.pro/video-editor" target="_blank"><span>剪映</span></a>
+        </div>
+      </div>
+    </div>
+    <!-- 影片平台比較區塊 -->
+    <section class="compare-section">
+      <h2>主流 AI 影片生成平台比較</h2>
+      <!-- 平台卡片（新版一行四格，色彩符合） -->
+      <div class="platform-compare-cards">
+        <div class="platform-card veo">
+          <div class="platform-title">Google Veo 3</div>
+          <div class="platform-stars">★★★★★</div>
+          <div class="platform-desc">畫質極佳，支援多語言，中/英語意理解強，適合生活/寫實風格。</div>
+        </div>
+        <div class="platform-card sora">
+          <div class="platform-title">OpenAI Sora</div>
+          <div class="platform-stars">★★★★★</div>
+          <div class="platform-desc">動態物理表現一流，敘事短片、商用影片首選，目前封測。</div>
+        </div>
+        <div class="platform-card runway">
+          <div class="platform-title">Runway Gen-4</div>
+          <div class="platform-stars">★★★★☆</div>
+          <div class="platform-desc">即時生成、特效豐富、創意應用彈性高，適合短影音與行銷。</div>
+        </div>
+        <div class="platform-card pika">
+          <div class="platform-title">Pika Labs</div>
+          <div class="platform-stars">★★★★☆</div>
+          <div class="platform-desc">動畫角色、卡通風格突出，輕鬆入門，遊戲/動畫短片推薦。</div>
+        </div>
+      </div>
+      <!-- 比較表格 -->
+      <div class="compare-table-block">
+        <h3>重點功能對比</h3>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>平台</th>
+              <th>畫質</th>
+              <th>語意理解</th>
+              <th>動態連貫</th>
+              <th>特效/風格</th>
+              <th>操作易用</th>
+              <th>適合場景</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="label-veo">Veo 3</td>
+              <td>★★★★★</td>
+              <td>★★★★★</td>
+              <td>★★★★☆</td>
+              <td>★★★☆☆</td>
+              <td>★★★★☆</td>
+              <td>生活片、紀錄片</td>
+            </tr>
+            <tr>
+              <td class="label-sora">Sora</td>
+              <td>★★★★★</td>
+              <td>★★★★☆</td>
+              <td>★★★★★</td>
+              <td>★★★★☆</td>
+              <td>★★★☆☆</td>
+              <td>劇情片、廣告</td>
+            </tr>
+            <tr>
+              <td class="label-runway">Runway Gen-4</td>
+              <td>★★★★☆</td>
+              <td>★★★☆☆</td>
+              <td>★★★★☆</td>
+              <td>★★★★★</td>
+              <td>★★★★★</td>
+              <td>短影音、行銷素材</td>
+            </tr>
+            <tr>
+              <td class="label-pika">Pika Labs</td>
+              <td>★★★☆☆</td>
+              <td>★★★☆☆</td>
+              <td>★★★☆☆</td>
+              <td>★★★★★</td>
+              <td>★★★★★</td>
+              <td>動畫、遊戲風</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- 應用場景與結論 -->
+      <div class="compare-bottom-row">
+        <div class="col">
+          <h3>平台適用建議</h3>
+          <ul>
+            <li><span style="color:#348e65;">Veo 3</span>：生活寫實、紀錄片、語言多樣性需求</li>
+            <li><span style="color:#2951b6;">Sora</span>：敘事/劇情主導、物理細節動畫</li>
+            <li><span style="color:#a141c2;">Runway Gen-4</span>：快速短片、特效豐富、社群行銷</li>
+            <li><span style="color:#f2a93b;">Pika Labs</span>：動畫角色、遊戲、卡通短片</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3>總結</h3>
+          <div class="compare-summary">
+            <b style="color:#348e65;">Veo 3</b> 生活片、紀錄片首選；<b style="color:#2951b6;">Sora</b> 擅長敘事與物理細節；<b style="color:#a141c2;">Runway Gen-4</b> 適合快速多變短影音；<b style="color:#f2a93b;">Pika Labs</b> 動畫/遊戲卡通優勢明顯。選擇依需求取向，發揮最大AI影片創作效益！
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
   <script>
-    // 導覽列 active 標示
+    // 導覽列 active 標示（自動化，請套用到所有頁面！）
     document.querySelectorAll('.nav-links a').forEach(link => {
-      if (location.pathname.endsWith(link.getAttribute('href'))) {
+      const href = link.getAttribute('href');
+      if (
+        location.pathname === '/' + href ||
+        location.pathname.endsWith('/' + href) ||
+        (href === 'index.html' && (location.pathname === '/' || location.pathname.endsWith('/')))
+      ) {
         link.classList.add('active');
       }
     });
