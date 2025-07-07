@@ -128,9 +128,9 @@
       background: var(--morandi-green-light);
       color: var(--morandi-green-dark);
       border: none;
-      padding: 0;
+      padding: 8px 20px;
       border-radius: 8px 8px 0 0;
-      font-size: 1.22em;
+      font-size: 1.14em;
       font-weight: 700;
       cursor: pointer;
       transition: background 0.12s, color 0.12s;
@@ -139,33 +139,12 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-width: 220px;
-      min-height: 84px;
+      white-space: pre-line;
+      line-height: 1.15;
     }
     .generator-tab.active {
       background: var(--morandi-blue);
       color: #fff;
-    }
-    .generator-tab-title {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      font-weight: 700;
-      line-height: 1.18;
-      text-align: center;
-    }
-    .generator-tab-title .tab-subtitle {
-      display: block;
-      text-align: center;
-      font-weight: 700;
-      margin-top: 2px;
-      font-size: 1em;
-    }
-    @media (max-width:600px) {
-      .generator-tabs { flex-direction: column; gap: 2px;}
-      .generator-tab { width: 100%; min-width: unset; border-radius: 7px; margin-bottom: 2px;}
     }
     .generator-block {
       background: var(--morandi-block);
@@ -256,19 +235,14 @@
       font-size: 1em;
       color: #888;
     }
-    /* 頁腳樣式 */
-    .main-footer {
-      width: 100%;
-      background: var(--morandi-green-dark);
-      color: #fff;
-      text-align: center;
-      padding: 18px 0 12px 0;
-      font-size: 1.08em;
-      font-family: 'Noto Sans TC', sans-serif;
-      letter-spacing: 1px;
-      margin-top: 40px;
-      border-radius: 0 0 8px 8px;
-      box-shadow: 0 -2px 12px #b7c4b133;
+    @media (max-width:600px) {
+      .container { padding: 0 2vw; }
+      .custom-title { font-size: 1.3em;}
+      .custom-instruction { padding: 12px 6vw; font-size: 0.98em;}
+      .generator-block { padding: 13px 4vw 14px 4vw;}
+      .generator-tabs { flex-direction: column; gap: 2px;}
+      .generator-tab { width: 100%; border-radius: 7px; margin-bottom: 2px;}
+      .select-row { flex-direction: column; gap: 2px;}
     }
   </style>
 </head>
@@ -304,26 +278,10 @@
       </ul>
     </div>
     <div class="generator-tabs">
-      <button class="generator-tab active" data-tab="script">
-        <span class="generator-tab-title">
-          文生腳本 Prompt<br><span class="tab-subtitle">生成器</span>
-        </span>
-      </button>
-      <button class="generator-tab" data-tab="image">
-        <span class="generator-tab-title">
-          文生圖片 Prompt<br><span class="tab-subtitle">生成器</span>
-        </span>
-      </button>
-      <button class="generator-tab" data-tab="video">
-        <span class="generator-tab-title">
-          文生影片 Prompt<br><span class="tab-subtitle">生成器</span>
-        </span>
-      </button>
-      <button class="generator-tab" data-tab="agent">
-        <span class="generator-tab-title">
-          影片AI Agent執行<br><span class="tab-subtitle">生成器</span>
-        </span>
-      </button>
+      <button class="generator-tab active" data-tab="script"><span>文生腳本 Prompt<br>生成器</span></button>
+      <button class="generator-tab" data-tab="image"><span>文生圖片 Prompt<br>生成器</span></button>
+      <button class="generator-tab" data-tab="video"><span>文生影片 Prompt<br>生成器</span></button>
+      <button class="generator-tab" data-tab="agent"><span>影片AI Agent執行<br>生成器</span></button>
     </div>
     <!-- 文生腳本 -->
     <div class="generator-block" id="tab-script">
@@ -374,6 +332,7 @@
             <option>水彩</option>
             <option>像素風</option>
             <option>賽博龐克</option>
+            <option>日本漫畫</option>
             <option>未來感</option>
           </select>
           <span class="select-or">或</span>
@@ -422,7 +381,7 @@
     <div class="generator-block" id="tab-video" style="display:none;">
       <form class="generator-form" id="form-video">
         <label>主題/片段描述</label>
-        <input type="text" name="content" placeholder="如：AI老師在教室中互動" required>
+        <input type="text" name="content" placeholder="如：一台紅色跑車" required>
         <label>影片長度</label>
         <input type="text" name="duration" placeholder="如：10秒、30秒">
         <label>畫面風格</label>
@@ -440,7 +399,7 @@
           <input type="text" name="style" placeholder="自訂風格">
         </div>
         <label>動作/事件</label>
-        <input type="text" name="action" placeholder="如：AI老師寫黑板、學生舉手發問">
+        <input type="text" name="action" placeholder="如：在街頭奔馳">
         <label>鏡頭運動</label>
         <div class="select-row">
           <select name="camera_s">
@@ -468,9 +427,9 @@
     <div class="generator-block" id="tab-agent" style="display:none;">
       <form class="generator-form" id="form-agent">
         <label>主題</label>
-        <input type="text" name="topic" placeholder="如：AI助教帶你認識生成式AI" required>
+        <input type="text" name="topic" placeholder="如：帶你認識生成式AI" required>
         <label>目標觀眾</label>
-        <input type="text" name="audience" placeholder="如：大學生、企業培訓">
+        <input type="text" name="audience" placeholder="如：一般大眾、學生、企業培訓">
         <label>影片長度</label>
         <input type="text" name="duration" placeholder="如：2分鐘">
         <label>影片風格</label>
