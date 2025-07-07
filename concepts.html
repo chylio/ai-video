@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>核心應用 | AI影片製作指南</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
-  <!-- (保留原有CSS) -->
   <!-- ...你的CSS內容... -->
 </head>
 <body>
@@ -14,7 +13,7 @@
     <a href="index.html" class="nav-logo">AI影片製作指南</a>
     <div class="nav-links">
       <a href="index.html">首頁</a>
-      <a href="concepts.html" class="active">核心應用</a>
+      <a href="concepts.html">核心應用</a>
       <a href="prompts.html">Prompt結構</a>
       <a href="workflow.html">製作流程</a>
       <a href="tools.html">工具平台</a>
@@ -25,9 +24,14 @@
     <!-- ...你的原始內容... -->
   </div>
   <script>
-    // 導覽列 active 標示
+    // 導覽列 active 標示（更健壯版本，複製到每個頁面）
     document.querySelectorAll('.nav-links a').forEach(link => {
-      if (location.pathname.endsWith(link.getAttribute('href'))) {
+      const href = link.getAttribute('href');
+      if (
+        location.pathname === '/' + href ||
+        location.pathname.endsWith('/' + href) ||
+        (href === 'index.html' && (location.pathname === '/' || location.pathname.endsWith('/')))
+      ) {
         link.classList.add('active');
       }
     });
