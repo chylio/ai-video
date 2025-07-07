@@ -19,12 +19,18 @@
       --morandi-block-title: #557d6b;
       --morandi-accent: #b4d2c2;
     }
+    html, body {
+      height: 100%;
+    }
     body {
       font-family: 'Noto Sans TC', sans-serif;
       background: var(--morandi-bg);
       margin: 0;
       overflow-x: hidden;
       position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     #tsparticles {
       position: fixed;
@@ -76,6 +82,7 @@
       max-width: 900px;
       margin: 32px auto 0 auto;
       padding: 0 16px 40px 16px;
+      flex: 1 0 auto;
     }
     .prompt-title {
       color: var(--morandi-blue);
@@ -156,9 +163,10 @@
       font-size: 1.08em;
       font-family: 'Noto Sans TC', sans-serif;
       letter-spacing: 1px;
-      margin-top: 40px;
       border-radius: 0 0 8px 8px;
       box-shadow: 0 -2px 12px #b7c4b133;
+      flex-shrink: 0;
+      margin-top: auto;
     }
     @media (max-width:600px) {
       .container { padding: 0 2vw; }
