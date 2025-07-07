@@ -33,7 +33,7 @@
       height: 100%;
       z-index: -1;
     }
-    /* 首頁統一版導覽列 */
+    /* 導覽列 */
     .main-navbar {
       background-color: #ffffffcc; /* 微透明白 */
       backdrop-filter: blur(6px);
@@ -57,6 +57,7 @@
     }
     .nav-links {
       display: flex;
+      align-items: center;
     }
     .nav-links a {
       margin-left: 1.5rem;
@@ -70,6 +71,64 @@
     .nav-links a.active {
       color: #1B5E20;
       border-bottom: 2px solid #1B5E20;
+    }
+    /* === 手機RWD：導覽列變漢堡 === */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 20;
+    }
+    .nav-toggle span {
+      display: block;
+      height: 3px;
+      width: 26px;
+      margin: 4px 0;
+      background: #4CAF50;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    @media (max-width: 800px) {
+      .main-navbar {
+        padding: 1rem 1rem;
+      }
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100vw;
+        height: 100vh;
+        width: 70vw;
+        max-width: 320px;
+        background: #ffffffee;
+        box-shadow: -2px 0 18px #b7c4b155;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 70px 1.5rem 1.5rem 1.5rem;
+        gap: 1.4rem;
+        transition: right 0.3s;
+        z-index: 15;
+      }
+      .nav-links.open {
+        right: 0;
+      }
+      .nav-toggle {
+        display: flex;
+      }
+      .nav-toggle.open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      .nav-toggle.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .nav-toggle.open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
     }
     .container {
       max-width: 900px;
@@ -260,6 +319,11 @@
   <!-- 導覽列 -->
   <nav class="main-navbar">
     <a href="index.html" class="nav-logo">AI影片製作指南</a>
+    <button class="nav-toggle" aria-label="開啟主選單">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     <div class="nav-links">
       <a href="index.html">首頁</a>
       <a href="concepts.html">核心應用</a>
@@ -676,6 +740,21 @@
     });
     // 自動插入年份到頁腳
     document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    // === 新增：漢堡選單開關 ===
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    navToggle.addEventListener('click', function() {
+      navLinks.classList.toggle('open');
+      navToggle.classList.toggle('open');
+    });
+    // 點選導航連結時自動關閉
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navToggle.classList.remove('open');
+      });
+    });
   </script>
 </body>
 </html>
