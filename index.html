@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>生成式AI影片操作指南</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+nav button { margin-right: 10px; }
+section { display: none; margin-top: 20px; }
+section.active { display: block; }
+textarea { width: 100%; height: 80px; }
+.result { background: #f0f0f0; padding: 10px; margin-top: 10px; }
+</style>
+</head>
+<body>
+<h1>生成式AI影片操作指南</h1>
+<nav>
+  <button onclick="showSection('home')">首頁</button>
+  <button onclick="showSection('concepts')">核心概念</button>
+  <button onclick="showSection('workflow')">製作流程</button>
+  <button onclick="showSection('tools')">相關工具</button>
+  <button onclick="showSection('prompts')">提示詞結構</button>
+  <button onclick="showSection('consistency')">素材一致性</button>
+  <button onclick="showSection('custom')">客製化prompt 輸入區</button>
+</nav>
+<section id="home" class="active">
+  <h2>首頁</h2>
+  <p>歡迎使用生成式AI影片操作指南。本指南將帶您了解如何利用AI工具製作影片。</p>
+</section>
+<section id="concepts">
+  <h2>核心概念</h2>
+  <p>介紹生成式AI在影片製作中的重要概念與應用。</p>
+</section>
+<section id="workflow">
+  <h2>製作流程</h2>
+  <p>從腳本撰寫、畫面生成到旁白錄製的完整流程。</p>
+</section>
+<section id="tools">
+  <h2>相關工具</h2>
+  <p>列出常用的生成式AI工具與資源連結。</p>
+</section>
+<section id="prompts">
+  <h2>提示詞結構</h2>
+  <p>如何撰寫適合腳本、圖片與旁白生成的提示詞。</p>
+</section>
+<section id="consistency">
+  <h2>素材一致性</h2>
+  <p>保持影片各素材風格一致的技巧。</p>
+</section>
+<section id="custom">
+  <h2>客製化prompt 輸入區</h2>
+  <div>
+    <label>腳本生成器</label>
+    <textarea id="scriptPrompt" placeholder="輸入腳本提示詞"></textarea>
+  </div>
+  <div>
+    <label>圖片生成器</label>
+    <textarea id="imagePrompt" placeholder="輸入圖片提示詞"></textarea>
+  </div>
+  <div>
+    <label>旁白生成器</label>
+    <textarea id="narrationPrompt" placeholder="輸入旁白提示詞"></textarea>
+  </div>
+  <button onclick="generate()">生成內容</button>
+  <div id="results"></div>
+</section>
+<script>
+function showSection(id) {
+  document.querySelectorAll('section').forEach(sec => {
+    sec.classList.remove('active');
+  });
+  document.getElementById(id).classList.add('active');
+}
+function generate() {
+  const scriptP = document.getElementById('scriptPrompt').value;
+  const imageP = document.getElementById('imagePrompt').value;
+  const narrP = document.getElementById('narrationPrompt').value;
+  let html = '';
+  if (scriptP) {
+    html += `<div class="result"><strong>腳本生成結果：</strong><p>模擬GPT：根據提示「${scriptP}」生成腳本內容。</p></div>`;
+  }
+  if (imageP) {
+    html += `<div class="result"><strong>圖片生成結果：</strong><p>模擬GPT：根據提示「${imageP}」生成圖片描述。</p></div>`;
+  }
+  if (narrP) {
+    html += `<div class="result"><strong>旁白生成結果：</strong><p>模擬GPT：根據提示「${narrP}」生成旁白稿。</p></div>`;
+  }
+  document.getElementById('results').innerHTML = html;
+}
+</script>
+</body>
+</html>
