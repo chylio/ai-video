@@ -3,340 +3,248 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>生成式AI影片操作指南</title>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+  <title>客製化 Prompt 產生器</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 0;
+    body { font-family: 'Noto Sans TC', sans-serif; background: #f5f5f5; margin: 0; padding: 0;}
+    h1 { color: #233e74; margin: 28px 0 18px 32px; font-size:2em;}
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 16px 44px 16px;}
+    .card3 { background: #fff; border-radius: 14px; box-shadow: 0 3px 14px rgba(0,0,0,0.08); padding: 29px 24px 17px 24px; margin-bottom: 30px;}
+    .card3 h2 { color: #5B7D5A; font-size: 1.2em; margin: 0 0 13px 0;}
+    .form-row { display: flex; flex-wrap: wrap; gap: 15px;}
+    .form-col { flex: 1 1 250px; min-width: 250px;}
+    .form-group { margin-bottom: 15px;}
+    .form-group label { display: block; color: #233e74; font-weight: 500; margin-bottom: 3px;}
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; border-radius: 7px; border: 1px solid #d3d8e2; padding: 8px 10px; font-size: 1em; background: #f4f5f8; transition: border 0.2s;
     }
-    h1 {
-      background-color: #7FB77E;
-      color: white;
-      padding: 20px;
-      margin: 0;
-      text-align: center;
+    .form-group textarea { min-height: 34px; resize: vertical;}
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border: 1.5px solid #7fb77e; background: #fff;}
+    .prompt-output {
+      background: #f7fbff; border-radius: 9px; padding: 14px 18px 8px 18px; font-size: 1.06em; margin-bottom: 8px;
+      border: 1.5px solid #e3e8f0; color: #233e74; white-space: pre-wrap; position: relative; min-height: 45px;
     }
-    .card-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 24px;
-      padding: 40px 8px;
-      max-width: 1100px;
-      margin: 0 auto;
+    .copy-btn {
+      position: absolute; top: 10px; right: 16px; background: #eaf3e7; color: #233e74; border: none; border-radius: 6px;
+      padding: 3px 13px; cursor: pointer; font-size: 1em; transition: background 0.2s;
     }
-    .card {
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.10);
-      padding: 30px 24px;
-      max-width: 340px;
-      width: 100%;
-      min-height: 200px;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+    .copy-btn:hover { background: #7fb77e; color: #fff;}
+    .gen-btn {
+      border: none; background: #7fb77e; color: #fff; border-radius: 6px; padding: 7px 22px;
+      font-size: 1em; margin-top: 10px; cursor: pointer; transition: background 0.2s;
     }
-    .card:hover {
-      transform: translateY(-6px) scale(1.03);
-      box-shadow: 0 10px 30px rgba(127,183,126,0.15);
-      border: 1.5px solid #A0C49D;
-    }
-    .card h2, .card h3 {
-      margin-top: 0;
-      color: #5B7D5A;
-    }
-    .card h2 {
-      font-size: 1.3em;
-      margin-bottom: 8px;
-    }
-    .card ul, .card ol {
-      list-style: none;
-      padding: 0;
-      margin: 8px 0 0 0;
-    }
-    .card ul li, .card ol li {
-      margin-bottom: 10px;
-      padding-left: 1.2em;
-      position: relative;
-    }
-    .card ul li:before, .card ol li:before {
-      content: "•";
-      color: #A0C49D;
-      position: absolute;
-      left: 0;
-      font-size: 1.2em;
-    }
-    .card .card-detail {
-      max-height: 0;
-      opacity: 0;
-      transition: max-height 0.4s cubic-bezier(.6,.2,.4,1), opacity 0.2s;
-      overflow: hidden;
-    }
-    .card.expanded .card-detail {
-      max-height: 800px;
-      opacity: 1;
-      margin-top: 10px;
-    }
-    .card .expand-btn {
-      background: none;
-      border: none;
-      color: #7FB77E;
-      font-size: 15px;
-      cursor: pointer;
-      align-self: flex-end;
-      margin-top: 16px;
-      transition: color 0.2s;
-    }
-    .card .expand-btn:hover {
-      color: #5B7D5A;
-      text-decoration: underline;
-    }
-    @media (max-width: 900px) {
-      .card-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 18px;
-        padding: 24px 4px;
-      }
-      .card {
-        max-width: 95vw;
-      }
-    }
-    .result {
-      background-color: #F0F8EC;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 15px;
-    }
-    textarea {
-      width: 100%;
-      height: 80px;
-      padding: 8px;
-      margin-top: 6px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      resize: vertical;
-      font-size: 14px;
-      font-family: inherit;
-    }
-    .prompt-block {
-      background: #f8fcf6;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(127,183,126,0.07);
-      margin: 18px 0;
-      padding: 12px 14px;
-      position: relative;
-    }
-    .prompt-block pre {
-      background: #f0f8ec;
-      border-radius: 6px;
-      padding: 10px 12px;
-      font-size: 14px;
-      white-space: pre-wrap;
-      margin: 8px 0 6px 0;
-      font-family: inherit;
-    }
-    .prompt-block button {
-      position: absolute;
-      top: 12px;
-      right: 16px;
-      background: #A0C49D;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 3px 12px;
-      cursor: pointer;
-      font-size: 13px;
-      transition: background 0.2s;
-    }
-    .prompt-block button:hover {
-      background: #7FB77E;
-    }
+    .gen-btn:hover { background: #233e74;}
+    @media (max-width: 900px) {.form-row { flex-direction: column; gap: 5px; } .form-col { min-width: 100%; }}
+    @media (max-width: 600px) {.container { padding: 0 2vw 22px 2vw;} h1 { font-size:1.3em; margin: 18px 0 10px 6vw;}}
   </style>
 </head>
 <body>
-  <h1>生成式AI影片操作指南</h1>
-  <div class="card-container">
+  <h1>客製化 prompt 產生器</h1>
+  <div class="container">
 
-    <!-- 首頁卡片 -->
-    <div class="card">
-      <h2>生成式AI影片製作簡介</h2>
-      <p>利用人工智慧技術，自動生成或輔助製作影片內容的過程，涵蓋腳本、圖像、音頻、後製等環節。</p>
-      <button class="expand-btn" onclick="toggleDetail(event, 0)">展開詳情</button>
-      <div class="card-detail">
-        <h3>主要應用領域</h3>
-        <ul>
-          <li><strong>內容創作：</strong>快速生成短影片、廣告、社群媒體內容。</li>
-          <li><strong>教育培訓：</strong>製作教學影片、課程動畫。</li>
-          <li><strong>行銷宣傳：</strong>個性化行銷影片、產品演示。</li>
-          <li><strong>虛擬/擴增實境：</strong>生成虛擬角色、場景。</li>
-        </ul>
+    <!-- 腳本生成器 -->
+    <div class="card3">
+      <h2>腳本生成器</h2>
+      <div class="form-row">
+        <div class="form-col">
+          <div class="form-group">
+            <label for="scriptTheme">主題/情境</label>
+            <input id="scriptTheme" placeholder="如：AI 醫療助理介紹" />
+          </div>
+          <div class="form-group">
+            <label for="scriptRole">角色設定</label>
+            <input id="scriptRole" placeholder="如：醫生、患者、AI 助理" />
+          </div>
+          <div class="form-group">
+            <label for="scriptStyle">敘事風格</label>
+            <input id="scriptStyle" placeholder="如：故事線、說明型" />
+          </div>
+          <div class="form-group">
+            <label for="scriptLength">片長/步驟</label>
+            <input id="scriptLength" placeholder="如：2 分鐘、5 分鏡" />
+          </div>
+          <button class="gen-btn" onclick="genScriptPrompt()">生成腳本 Prompt</button>
+        </div>
+        <div class="form-col">
+          <div class="prompt-output" id="scriptPromptBlock">
+            <button class="copy-btn" onclick="copyPrompt('scriptPromptOut')">複製</button>
+            <pre id="scriptPromptOut"></pre>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- 核心概念卡片 -->
-    <div class="card">
-      <h2>核心概念</h2>
-      <p>瞭解影片腳本的構成邏輯、節奏與視覺設計原則。</p>
-      <button class="expand-btn" onclick="toggleDetail(event, 1)">展開詳情</button>
-      <div class="card-detail">
-        <ul>
-          <li>腳本需有明確主題與結構</li>
-          <li>畫面設計需配合內容情緒</li>
-          <li>節奏掌控影響觀影體驗</li>
-        </ul>
+    <!-- 圖片生成器 -->
+    <div class="card3">
+      <h2>圖片生成器</h2>
+      <div class="form-row">
+        <div class="form-col">
+          <div class="form-group">
+            <label for="imgTheme">主題/畫面描述</label>
+            <input id="imgTheme" placeholder="如：未來感醫療診室" />
+          </div>
+          <div class="form-group">
+            <label for="imgSubject">主體/人物</label>
+            <input id="imgSubject" placeholder="如：醫生、AI機器人" />
+          </div>
+          <div class="form-group">
+            <label for="imgStyle">風格</label>
+            <input id="imgStyle" placeholder="如：寫實、插畫、3D" />
+          </div>
+          <div class="form-group">
+            <label for="imgView">鏡頭/視角</label>
+            <input id="imgView" placeholder="如：特寫、遠景" />
+          </div>
+          <button class="gen-btn" onclick="genImagePrompt()">生成圖片 Prompt</button>
+        </div>
+        <div class="form-col">
+          <div class="prompt-output" id="imgPromptBlock">
+            <button class="copy-btn" onclick="copyPrompt('imgPromptOut')">複製</button>
+            <pre id="imgPromptOut"></pre>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- 製作流程卡片 -->
-    <div class="card">
-      <h2>製作流程</h2>
-      <p>從構思到成片的完整步驟，讓製作更有條理。</p>
-      <button class="expand-btn" onclick="toggleDetail(event, 2)">展開詳情</button>
-      <div class="card-detail">
-        <ol>
-          <li><strong>腳本設計：</strong>撰寫分鏡、台詞、情感描述等。</li>
-          <li><strong>圖像生成：</strong>依據腳本內容設定AI圖像提示詞。</li>
-          <li><strong>配音合成：</strong>選擇語音產生旁白。</li>
-          <li><strong>視訊剪輯：</strong>整合素材剪輯成片。</li>
-          <li><strong>成片輸出：</strong>影片編碼與導出。</li>
-        </ol>
+    <!-- 旁白生成器 -->
+    <div class="card3">
+      <h2>旁白生成器</h2>
+      <div class="form-row">
+        <div class="form-col">
+          <div class="form-group">
+            <label for="narrTheme">主題/內容摘要</label>
+            <input id="narrTheme" placeholder="如：AI醫療助理應用" />
+          </div>
+          <div class="form-group">
+            <label for="narrTone">語氣/風格</label>
+            <input id="narrTone" placeholder="如：親切、專業" />
+          </div>
+          <div class="form-group">
+            <label for="narrLength">長度/結構</label>
+            <input id="narrLength" placeholder="如：1分鐘、三段式" />
+          </div>
+          <button class="gen-btn" onclick="genNarrPrompt()">生成旁白 Prompt</button>
+        </div>
+        <div class="form-col">
+          <div class="prompt-output" id="narrPromptBlock">
+            <button class="copy-btn" onclick="copyPrompt('narrPromptOut')">複製</button>
+            <pre id="narrPromptOut"></pre>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- 相關工具卡片 -->
-    <div class="card">
-      <h2>相關工具</h2>
-      <p>推薦好用的生成式AI影片工具。</p>
-      <button class="expand-btn" onclick="toggleDetail(event, 3)">展開詳情</button>
-      <div class="card-detail">
-        <ul>
-          <li>Runway</li>
-          <li>Pika</li>
-          <li>Leonardo</li>
-          <li>Heygen</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 提示詞結構卡片 -->
-    <div class="card">
-      <h2>提示詞結構</h2>
-      <p>有效的 prompt 架構提升AI生成品質。</p>
-      <button class="expand-btn" onclick="toggleDetail(event, 4)">展開詳情</button>
-      <div class="card-detail">
-        <ul>
-          <li>角色 + 語氣 + 格式 + 段落內容</li>
-          <li>根據需求調整細節</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 素材一致性卡片 -->
-    <div class="card">
-      <h2>素材一致性</h2>
-      <p>維持風格與敘事流暢性，呈現專業影片。</p>
-      <button class="expand-btn" onclick="toggleDetail(event, 5)">展開詳情</button>
-      <div class="card-detail">
-        <ul>
-          <li>畫面、語音、旁白風格一致</li>
-          <li>顏色、字型、音效統一</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- 客製化 prompt 區塊卡片 -->
-    <div class="card">
-      <h2>客製化 Prompt 輸入區</h2>
-      <p>快速組合屬於你的AI影片提示詞，並直接複製貼上到大語言模型！</p>
-      <button class="expand-btn" onclick="toggleDetail(event, 6)">展開詳情</button>
-      <div class="card-detail">
-        <label for="scriptPrompt">影片腳本主題/需求</label>
-        <textarea id="scriptPrompt" placeholder="請輸入腳本主題或需求"></textarea>
-
-        <label for="imagePrompt">圖像生成描述</label>
-        <textarea id="imagePrompt" placeholder="請描述想要的畫面、主體或風格"></textarea>
-
-        <label for="narrationPrompt">影片文字內容主題</label>
-        <textarea id="narrationPrompt" placeholder="請輸入希望影片文字所涵蓋的主題或重點"></textarea>
-
-        <button onclick="generatePrompt()" style="margin-top:10px;">產出可直接複製的 Prompt</button>
-        <div id="results" class="result"></div>
+    <!-- 連動模式 -->
+    <div class="card3">
+      <h2>連動模式（腳本 → 圖片 → 旁白）</h2>
+      <div class="form-row">
+        <div class="form-col">
+          <div class="form-group">
+            <label for="linkTheme">主題</label>
+            <input id="linkTheme" placeholder="如：AI醫療助理" />
+          </div>
+          <div class="form-group">
+            <label for="linkStyle">風格</label>
+            <input id="linkStyle" placeholder="如：故事線、寫實" />
+          </div>
+          <div class="form-group">
+            <label for="linkChar">角色/主體</label>
+            <input id="linkChar" placeholder="如：醫生、AI助理" />
+          </div>
+          <div class="form-group">
+            <label for="linkView">鏡頭/語氣</label>
+            <input id="linkView" placeholder="如：遠景、專業" />
+          </div>
+          <button class="gen-btn" onclick="genLinkPrompt()">生成連動 Prompt</button>
+        </div>
+        <div class="form-col">
+          <div class="prompt-output" id="linkPromptBlock">
+            <button class="copy-btn" onclick="copyPrompt('linkPromptOut')">複製</button>
+            <pre id="linkPromptOut"></pre>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <script>
-    // 控制卡片展開收合
-    function toggleDetail(e, idx) {
-      e.stopPropagation();
-      const cards = document.querySelectorAll('.card');
-      cards.forEach((card, i) => {
-        if(i === idx) {
-          card.classList.toggle('expanded');
-        } else {
-          card.classList.remove('expanded');
-        }
-      });
-    }
+<script>
+  function genScriptPrompt() {
+    const theme = document.getElementById('scriptTheme').value.trim() || '（未指定）';
+    const role = document.getElementById('scriptRole').value.trim() || '（未指定）';
+    const style = document.getElementById('scriptStyle').value.trim() || '（未指定）';
+    const length = document.getElementById('scriptLength').value.trim() || '（未指定）';
+    const prompt = 
+`請根據下列條件產生影片腳本：
+主題/情境：${theme}
+角色設定：${role}
+敘事風格：${style}
+片長/分鏡數：${length}
+請以腳本格式詳細敘述每個場景，包括角色對話與動作。`;
+    document.getElementById('scriptPromptOut').textContent = prompt;
+  }
 
-    // 客製化 prompt 產出與複製
-    function generatePrompt() {
-      const script = document.getElementById('scriptPrompt').value.trim();
-      const image = document.getElementById('imagePrompt').value.trim();
-      const narration = document.getElementById('narrationPrompt').value.trim();
+  function genImagePrompt() {
+    const theme = document.getElementById('imgTheme').value.trim() || '（未指定）';
+    const subject = document.getElementById('imgSubject').value.trim() || '（未指定）';
+    const style = document.getElementById('imgStyle').value.trim() || '（未指定）';
+    const view = document.getElementById('imgView').value.trim() || '（未指定）';
+    const prompt = 
+`請根據下列條件產生圖片生成 prompt：
+主題/場景：${theme}
+主體/人物：${subject}
+風格：${style}
+鏡頭/視角：${view}
+請以圖像生成模型（如Stable Diffusion）適用的格式產生詳細描述。`;
+    document.getElementById('imgPromptOut').textContent = prompt;
+  }
 
-      let html = '';
-      if (script) {
-        html += `<div class="prompt-block"><strong>【影片腳本生成 Prompt】</strong>
-<pre id="scriptOut">請根據以下腳本架構產生一段影片腳本：
-場景設置：${script}
-角色設定：主角、配角
-動作安排：角色主要行為
-對白示例：角色對話
-轉場/節奏：如何銜接各段</pre>
-<button onclick="copyPrompt('scriptOut')">複製 Prompt</button>
-</div>`;
-      }
+  function genNarrPrompt() {
+    const theme = document.getElementById('narrTheme').value.trim() || '（未指定）';
+    const tone = document.getElementById('narrTone').value.trim() || '（未指定）';
+    const length = document.getElementById('narrLength').value.trim() || '（未指定）';
+    const prompt =
+`請根據下列條件產生影片旁白內容：
+主題/內容：${theme}
+語氣/風格：${tone}
+長度/結構：${length}
+請以適合AI語音生成的敘述方式，分段詳細撰寫旁白文稿。`;
+    document.getElementById('narrPromptOut').textContent = prompt;
+  }
 
-      if (image) {
-        html += `<div class="prompt-block"><strong>【圖像生成 Prompt】</strong>
-<pre id="imageOut">請根據以下圖片生成架構，產生一組圖像生成提示詞：
-主體：${image}
-場景：環境背景、光影氣氛
-風格：寫實、插畫、3D等
-鏡頭視角：特寫、遠景、鳥瞰
-色調/情感：希望呈現的氛圍</pre>
-<button onclick="copyPrompt('imageOut')">複製 Prompt</button>
-</div>`;
-      }
+  function genLinkPrompt() {
+    const theme = document.getElementById('linkTheme').value.trim() || '（未指定）';
+    const style = document.getElementById('linkStyle').value.trim() || '（未指定）';
+    const char = document.getElementById('linkChar').value.trim() || '（未指定）';
+    const view = document.getElementById('linkView').value.trim() || '（未指定）';
+    const prompt =
+`請依以下主題及參數，產生同一主題的三種 prompt，分別用於影片腳本、圖片分鏡、旁白生成，並分別標註：
 
-      if (narration) {
-        html += `<div class="prompt-block"><strong>【影片文字生成 Prompt】</strong>
-<pre id="narrationOut">請根據以下影片文字架構，生成一部可用於AI影片的文字內容：
-開頭：引起觀眾興趣（如故事開場、問題）
-主體段落：${narration}
-結尾：總結重點或呼籲行動</pre>
-<button onclick="copyPrompt('narrationOut')">複製 Prompt</button>
-</div>`;
-      }
+(1) 影片腳本 prompt：
+主題：${theme}
+角色設定：${char}
+敘事風格：${style}
+鏡頭/結構：${view}
+請詳細描述每個分鏡腳本內容，包含場景、角色動作與對白。
 
-      document.getElementById('results').innerHTML = html || "請至少輸入一項內容";
-    }
+(2) 圖片分鏡 prompt：
+主題/場景：${theme}
+主體/角色：${char}
+風格：${style}
+鏡頭：${view}
+請以圖像生成模型格式，分鏡逐一詳細描述每張圖片。
 
-    function copyPrompt(id) {
-      const text = document.getElementById(id).innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Prompt 已複製到剪貼簿！');
-      });
-    }
-  </script>
+(3) 旁白 prompt：
+主題：${theme}
+語氣風格：${style}
+請以貼合腳本情境的語氣，撰寫每個分鏡的旁白稿。`;
+    document.getElementById('linkPromptOut').textContent = prompt;
+  }
+
+  function copyPrompt(id) {
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      alert('Prompt 已複製到剪貼簿！');
+    });
+  }
+</script>
 </body>
 </html>
