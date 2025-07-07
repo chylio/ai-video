@@ -13,49 +13,63 @@
       --morandi-green-lighter: #e2ede9;
       --morandi-blue: #6d8c99;
       --morandi-grey: #d6d7d9;
-      --morandi-bg: #f6f7f5;
+      --morandi-bg: #fdfbf6;
       --morandi-block: #dde5e0;
       --morandi-block2: #c6d1c5;
       --morandi-block-title: #557d6b;
       --morandi-accent: #b4d2c2;
     }
+
     body {
       font-family: 'Noto Sans TC', sans-serif;
       background: var(--morandi-bg);
       margin: 0;
+      overflow-x: hidden;
+      position: relative;
     }
+
+    /* ✅ 粒子背景 */
+    #tsparticles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
     .main-navbar {
       width: 100%;
-      background: var(--morandi-green-dark);
-      color: #fff;
+      background: #ffffffcc;
+      color: var(--morandi-green-dark);
       display: flex;
       align-items: center;
       padding: 0 0 0 10px;
       min-height: 48px;
       border-radius: 8px 8px 0 0;
       box-sizing: border-box;
+      backdrop-filter: blur(6px);
     }
+
     .main-navbar .nav-logo {
       font-size: 2.2em;
       font-weight: 700;
-      color: #fff;
+      color: var(--morandi-green-dark);
       margin-right: 28px;
       letter-spacing: 1.5px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.07);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.05);
       text-decoration: none;
       line-height: 1.1;
-      font-family: 'Noto Sans TC', sans-serif;
-      padding: 0 8px 0 4px;
       display: flex;
       align-items: center;
     }
+
     .main-navbar .nav-links {
       display: flex;
       gap: 18px;
       margin-top: 3px;
     }
+
     .main-navbar .nav-links a {
-      color: #fff;
+      color: var(--morandi-green-dark);
       text-decoration: none;
       font-size: 1.25em;
       font-weight: 700;
@@ -64,24 +78,27 @@
       transition: background 0.15s, color 0.13s;
       letter-spacing: 0.5px;
       margin: 0 2px;
-      display: inline-block;
     }
+
     .main-navbar .nav-links a.active,
     .main-navbar .nav-links a:hover {
       background: var(--morandi-green-light);
-      color: var(--morandi-green-dark);
+      color: white;
     }
+
     @media (max-width: 900px) {
       .main-navbar { flex-direction: column; align-items: flex-start; min-height: unset; padding: 0 0 0 6px;}
       .main-navbar .nav-logo { font-size: 1.3em; margin-bottom: 4px;}
       .main-navbar .nav-links { gap: 8px; flex-wrap: wrap;}
       .main-navbar .nav-links a { font-size: 1em; }
     }
+
     .container {
       max-width: 900px;
       margin: 32px auto 0 auto;
       padding: 0 16px 40px 16px;
     }
+
     .core-title {
       color: var(--morandi-blue);
       font-size: 2.2em;
@@ -91,11 +108,12 @@
       margin: 25px 0 12px 0;
       letter-spacing: 2px;
     }
+
     .core-title .icon {
       font-size: 1.1em;
       margin-right: 10px;
-      color: var(--morandi-blue);
     }
+
     .core-desc {
       color: var(--morandi-green-dark);
       font-size: 1.13em;
@@ -103,6 +121,7 @@
       margin-top: 0;
       letter-spacing: 0.5px;
     }
+
     .core-block {
       background: var(--morandi-block);
       border-radius: 14px;
@@ -112,7 +131,9 @@
       box-shadow: 0 2px 12px rgba(150,170,150,0.10);
       position: relative;
       border-left: 8px solid var(--morandi-green-dark);
+      backdrop-filter: blur(2px);
     }
+
     .core-block .block-title {
       color: var(--morandi-block-title);
       font-size: 1.3em;
@@ -122,25 +143,24 @@
       align-items: center;
       letter-spacing: 1px;
     }
+
     .core-block .block-title .icon {
       margin-right: 8px;
       font-size: 1.25em;
       opacity: 0.95;
     }
+
     .core-block ul {
       margin: 10px 0 0 0;
       padding-left: 1.3em;
-      color: var(--morandi-green-dark);
       font-size: 1.04em;
       letter-spacing: 0.1em;
     }
+
     .core-block li {
       margin-bottom: 2px;
     }
-    .core-block strong {
-      color: var(--morandi-green-dark);
-      font-weight: bold;
-    }
+
     .core-note {
       color: var(--morandi-green-dark);
       margin: 28px 0 10px 0;
@@ -150,8 +170,9 @@
       border-radius: 9px;
       padding: 14px 22px;
       box-shadow: 0 2px 8px rgba(100,100,100,0.08);
+      backdrop-filter: blur(2px);
     }
-    /* 頁腳樣式 */
+
     .main-footer {
       width: 100%;
       background: var(--morandi-green-dark);
@@ -159,12 +180,12 @@
       text-align: center;
       padding: 18px 0 12px 0;
       font-size: 1.08em;
-      font-family: 'Noto Sans TC', sans-serif;
       letter-spacing: 1px;
       margin-top: 40px;
       border-radius: 0 0 8px 8px;
       box-shadow: 0 -2px 12px #b7c4b133;
     }
+
     @media (max-width:600px) {
       .container { padding: 0 2vw; }
       .core-title { font-size: 1.35em;}
@@ -174,6 +195,9 @@
   </style>
 </head>
 <body>
+  <!-- ✅ 粒子背景 -->
+  <div id="tsparticles"></div>
+
   <!-- 導覽列 -->
   <nav class="main-navbar">
     <a href="index.html" class="nav-logo">AI影片製作指南</a>
@@ -186,6 +210,7 @@
       <a href="custom.html">Prompt生成器</a>
     </div>
   </nav>
+
   <div class="container">
     <div class="core-title">
       <span class="icon">📘</span> 核心應用
@@ -206,35 +231,66 @@
       <div class="block-title"><span class="icon">🖼️</span>圖像設計與創意產業</div>
       <ul>
         <li><strong>功能：</strong>快速產出設計概念、激發創意多樣性、降低專業門檻。</li>
-        <li><strong>應用場景：</strong>生成精畫風品牌設計、根據文字描述產生高品質圖片，幫助設計師構思和激發靈感。</li>
+        <li><strong>應用場景：</strong>生成精畫風品牌設計、根據文字描述產生高品質圖片。</li>
       </ul>
     </div>
 
     <div class="core-block">
       <div class="block-title"><span class="icon">🎓</span>教育輔助與個性化學習</div>
       <ul>
-        <li><strong>功能：</strong>提升教材製作效率、提供個性化學習體驗、即時學習支援、增強衛教宣導效果。</li>
-        <li><strong>應用場景：</strong>生成教學材料和測題、設計個性化學習計畫、提供即時學習建議和解答，製作健康衛教內容、疾病預防宣導材料、用藥安全指導、營養教育資源。</li>
+        <li><strong>功能：</strong>提供個性化教材、增強學習體驗、提升衛教效率。</li>
+        <li><strong>應用場景：</strong>生成教學材料、個人學習計畫、健康宣導。</li>
       </ul>
     </div>
 
     <div class="core-block">
       <div class="block-title"><span class="icon">🎵</span>音樂與娛樂創作</div>
       <ul>
-        <li><strong>功能：</strong>自動生成音樂元素、降低音樂創作門檻、提供創作靈感。</li>
-        <li><strong>應用場景：</strong>自動生成旋律與編曲，協助音樂人創作完整作品，幫助非專業人士創造動聽音樂、創意故事生成。</li>
+        <li><strong>功能：</strong>自動生成音樂元素、降低創作門檻、提供靈感。</li>
+        <li><strong>應用場景：</strong>自動旋律、協作音樂創作、創意故事生成。</li>
       </ul>
     </div>
 
     <div class="core-note">
-      影片可應用於衛教、教學輔助、流程或活動說明、醫院或單位形象介紹。
+      影片可應用於衛教、教學輔助、流程說明、醫院或單位形象介紹。
     </div>
   </div>
+
   <footer class="main-footer">
     <span id="footer-year"></span> 奇美醫院教學中心製
   </footer>
+
+  <!-- ✅ tsParticles CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script>
-    // 導覽列 active 標示（更健壯版本，請複製到所有頁面）
+    tsParticles.load("tsparticles", {
+      fullScreen: { enable: false },
+      particles: {
+        number: { value: 80, density: { enable: true, area: 800 } },
+        color: { value: "#88a096" },
+        shape: { type: "circle" },
+        opacity: { value: 0.3 },
+        size: { value: 2 },
+        links: {
+          enable: true,
+          distance: 120,
+          color: "#c6d1c5",
+          opacity: 0.4,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 1,
+          direction: "none",
+          outModes: { default: "bounce" }
+        }
+      },
+      background: { color: "#fdfbf6" },
+      detectRetina: true
+    });
+  </script>
+
+  <script>
     document.querySelectorAll('.nav-links a').forEach(link => {
       const href = link.getAttribute('href');
       if (
@@ -245,7 +301,6 @@
         link.classList.add('active');
       }
     });
-    // 自動插入年份到頁腳
     document.getElementById('footer-year').textContent = new Date().getFullYear();
   </script>
 </body>
