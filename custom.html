@@ -129,6 +129,13 @@
       .nav-toggle.open span:nth-child(3) {
         transform: translateY(-7px) rotate(-45deg);
       }
+      /* 浮水印 RWD */
+      .watermark {
+        right: 8px;
+        bottom: 8px;
+        font-size: 0.9em;
+        padding: 5px 10px;
+      }
     }
     .container {
       max-width: 900px;
@@ -292,8 +299,7 @@
     }
     .main-footer {
       width: 100%;
-      background: var(--morandi-green-dark);
-      color: #fff;
+      color: #222;
       text-align: center;
       padding: 18px 0 12px 0;
       font-size: 1.08em;
@@ -301,6 +307,29 @@
       margin-top: 40px;
       border-radius: 0 0 8px 8px;
       box-shadow: 0 -2px 12px #b7c4b133;
+      background: transparent;
+    }
+    /* === 浮水印樣式 === */
+    .watermark {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 99;
+      font-size: 0.95em;
+      color: #bdbdbd;
+      background: rgba(255,255,255,0.18);
+      padding: 6px 13px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px #9de2a133;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s;
+      font-family: 'Noto Sans TC', sans-serif;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+    .watermark.visible {
+      opacity: 1;
     }
     @media (max-width:600px) {
       .container { padding: 0 2vw; }
@@ -310,6 +339,13 @@
       .generator-tabs { flex-direction: column; gap: 2px;}
       .generator-tab { width: 100%; border-radius: 7px; margin-bottom: 2px;}
       .select-row { flex-direction: column; gap: 2px;}
+      /* 浮水印 RWD */
+      .watermark {
+        right: 8px;
+        bottom: 8px;
+        font-size: 0.9em;
+        padding: 5px 10px;
+      }
     }
   </style>
 </head>
@@ -546,8 +582,10 @@
     </div>
   </div>
   <footer class="main-footer">
-    <span id="footer-year"></span> 奇美醫院教學中心製
+    <!-- 已移除年份及製作者說明，移至浮水印 -->
   </footer>
+  <!-- 浮水印 -->
+  <div class="watermark" id="watermark">2025 奇美醫院教學中心 吳曉琪製</div>
   <!-- tsParticles CDN & 設定 -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script>
@@ -688,7 +726,7 @@
       const ratio = (this.ratio.value.trim() || this.ratio_s.value);
       const extra = this.extra.value.trim();
 
-      let zh = `請你扮演AI影片製作Agent，根據下列主題與需求，依據標準AI影片製作流程，自動規劃並生成：\n1. 影片腳本\n2. 每段畫面AI繪圖Prompt\n3. 每段AI影片生成Prompt\n4. 每段旁白內容，並標註角色與語氣\n\n`;
+      let zh = `請你扮演AI影片製作Agent，根據下列主題與需求，依據標準AI影片製作流程，自動規劃並生成：\n1. 影片腳本\n2. 每段畫面AI繪圖Prompt\n3. 每段AI影片Prompt\n4. 每段旁白稿\n`;
       if(topic) zh += `主題：${topic}\n`;
       if(audience) zh += `目標觀眾：${audience}\n`;
       if(duration) zh += `影片長度：${duration}\n`;
@@ -697,7 +735,7 @@
       if(extra) zh += `其他需求：${extra}\n`;
       zh += `請依據上述資訊，產製一組可直接投入生成的AI影片任務內容（腳本、圖片Prompt、影片Prompt、旁白），格式清晰易複製。`;
 
-      let en = `Act as an AI video production agent. According to the following topic and requirements, based on the standard AI video production process, automatically plan and generate:\n1. Video script\n2. AI image prompt for each segment\n3. AI video prompt for each segment\n4. Narration for each segment, with character and tone marked\n\n`;
+      let en = `Act as an AI video production agent. According to the following topic and requirements, based on the standard AI video production process, automatically plan and generate:\n1. Video script\n2. Image prompts for each segment\n3. Video prompts for each segment\n4. Narration scripts for each segment\n`;
       if(topic) en += `Topic: ${topic}\n`;
       if(audience) en += `Target audience: ${audience}\n`;
       if(duration) en += `Video length: ${duration}\n`;
@@ -738,9 +776,6 @@
         link.classList.add('active');
       }
     });
-    // 自動插入年份到頁腳
-    document.getElementById('footer-year').textContent = new Date().getFullYear();
-
     // === 新增：漢堡選單開關 ===
     const navToggle = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
@@ -755,6 +790,19 @@
         navToggle.classList.remove('open');
       });
     });
+
+    // === 浮水印顯示控制：滑到底才顯示 ===
+    function checkWatermark() {
+      const watermark = document.getElementById('watermark');
+      if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 2)) {
+        watermark.classList.add('visible');
+      } else {
+        watermark.classList.remove('visible');
+      }
+    }
+    window.addEventListener('scroll', checkWatermark);
+    window.addEventListener('resize', checkWatermark);
+    checkWatermark();
   </script>
 </body>
 </html>
