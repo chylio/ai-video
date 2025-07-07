@@ -20,15 +20,24 @@
       --morandi-accent: #b4d2c2;
     }
 
-    body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background: var(--morandi-bg);
+    * {
+      box-sizing: border-box;
       margin: 0;
-      overflow-x: hidden;
-      position: relative;
+      padding: 0;
+      font-family: 'Noto Sans TC', sans-serif;
     }
 
-    /* ✅ 粒子背景層 */
+    body {
+      background-color: #FDFBF6;
+      color: #1B5E20;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
     #tsparticles {
       position: fixed;
       width: 100%;
@@ -36,44 +45,38 @@
       z-index: -1;
     }
 
-    /* ✅ 統一版導覽列（與首頁一致） */
     .main-navbar {
-      width: 100%;
-      background: #ffffffcc;
-      backdrop-filter: blur(10px);
+      background-color: #ffffffcc; /* 微透明白 */
+      backdrop-filter: blur(6px);
       color: #1B5E20;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.8rem 1.5rem;
+      padding: 1rem 2rem;
       border-bottom: 1px solid #E0E0E0;
       position: sticky;
       top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+      z-index: 10;
     }
 
     .main-navbar .nav-logo {
       font-size: 1.5rem;
       font-weight: 700;
-      color: #2E7D32;
       text-decoration: none;
-      display: flex;
-      align-items: center;
+      color: #2E7D32;
     }
 
     .nav-links {
       display: flex;
-      gap: 1.2rem;
     }
 
     .nav-links a {
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: #4CAF50;
+      margin-left: 1.5rem;
       text-decoration: none;
-      padding-bottom: 3px;
-      transition: all 0.3s ease;
+      color: #4CAF50;
+      font-weight: 500;
+      transition: all 0.3s;
+      padding-bottom: 4px;
     }
 
     .nav-links a:hover,
@@ -83,9 +86,10 @@
     }
 
     .container {
-      max-width: 900px;
+      max-width: 1100px;
       margin: 32px auto 0 auto;
       padding: 0 16px 40px 16px;
+      flex: 1 0 auto;
     }
 
     .core-title {
@@ -113,40 +117,43 @@
 
     .core-block {
       background: var(--morandi-block);
-      border-radius: 14px;
-      margin-bottom: 22px;
-      padding: 22px 28px 18px 28px;
+      border-radius: 18px;
+      margin-bottom: 32px;
+      padding: 28px 38px 24px 38px;
       color: var(--morandi-green-dark);
       box-shadow: 0 2px 12px rgba(150,170,150,0.10);
-      border-left: 8px solid var(--morandi-green-dark);
+      border-left: 12px solid var(--morandi-green-dark);
       backdrop-filter: blur(2px);
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .core-block .block-title {
       color: var(--morandi-block-title);
-      font-size: 1.3em;
+      font-size: 1.6em;
       font-weight: bold;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       letter-spacing: 1px;
     }
 
     .core-block .block-title .icon {
-      margin-right: 8px;
-      font-size: 1.25em;
+      margin-right: 12px;
+      font-size: 1.35em;
       opacity: 0.95;
     }
 
     .core-block ul {
       margin: 10px 0 0 0;
-      padding-left: 1.3em;
-      font-size: 1.04em;
+      padding-left: 1.5em;
+      font-size: 1.14em;
       letter-spacing: 0.1em;
     }
 
     .core-block li {
-      margin-bottom: 2px;
+      margin-bottom: 6px;
     }
 
     .core-note {
@@ -158,6 +165,9 @@
       border-radius: 9px;
       padding: 14px 22px;
       box-shadow: 0 2px 8px rgba(100,100,100,0.08);
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .main-footer {
@@ -171,13 +181,23 @@
       margin-top: 40px;
       border-radius: 0 0 8px 8px;
       box-shadow: 0 -2px 12px #b7c4b133;
+      flex-shrink: 0;
+      margin-top: auto;
     }
 
+    @media (max-width:900px) {
+      .container { max-width: 100%; }
+      .core-block, .core-note { max-width: 100%; }
+      .core-block { padding: 18px 8vw 16px 8vw; }
+    }
     @media (max-width:600px) {
       .container { padding: 0 2vw; }
       .core-title { font-size: 1.35em;}
-      .core-block { padding: 14px 8px 10px 12px;}
+      .core-block { padding: 14px 4vw 10px 4vw; border-left-width: 6px; }
       .core-block .block-title { font-size: 1.05em;}
+      .core-block .block-title .icon { font-size: 1.1em; }
+      .core-block ul { font-size: 1em; }
+      .core-note { padding: 8px 8vw; }
     }
   </style>
 </head>
@@ -185,7 +205,7 @@
   <!-- 粒子動畫背景 -->
   <div id="tsparticles"></div>
 
-  <!-- 導覽列 -->
+  <!-- 導覽列（與首頁一致） -->
   <nav class="main-navbar">
     <a href="index.html" class="nav-logo">AI影片製作指南</a>
     <div class="nav-links">
@@ -228,14 +248,6 @@
       <ul>
         <li><strong>功能：</strong>提升教材製作效率、提供個性化學習體驗、增強衛教效果。</li>
         <li><strong>應用場景：</strong>生成教學材料、設計個人學習計畫、製作健康宣導資源。</li>
-      </ul>
-    </div>
-
-    <div class="core-block">
-      <div class="block-title"><span class="icon">🎵</span>音樂與娛樂創作</div>
-      <ul>
-        <li><strong>功能：</strong>自動生成旋律、降低創作門檻、提供創作靈感。</li>
-        <li><strong>應用場景：</strong>音樂創作、故事生成、AI助手角色建立。</li>
       </ul>
     </div>
 
