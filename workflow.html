@@ -6,29 +6,21 @@
   <title>AI影像創作力|必備製作指南</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --morandi-green-dark: #587b6a;
-      --morandi-green: #88a096;
-      --morandi-green-light: #b7c4b1;
-      --morandi-green-lighter: #e2ede9;
-      --morandi-blue: #6d8c99;
-      --morandi-blue-strong: #2a3e96;
-      --morandi-bg: #fdfbf6;
-      --morandi-block: #dde5e0;
-      --morandi-block-title: #557d6b;
-      --morandi-accent: #b4d2c2;
-      --morandi-yellow: #e6dcb8;
-      --morandi-brown: #665c38;
-      --morandi-sky: #cde3ec;
-      --runway-purple: #9147c1;
-      --pika-orange: #f6a21a;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans TC', sans-serif;
     }
     body {
-      font-family: 'Noto Sans TC', sans-serif;
-      background: var(--morandi-bg);
-      margin: 0;
+      background-color: #FDFBF6;
+      color: #1B5E20;
+      line-height: 1.6;
       overflow-x: hidden;
       position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     #tsparticles {
       position: fixed;
@@ -36,9 +28,8 @@
       height: 100%;
       z-index: -1;
     }
-    /* 首頁統一版導覽列 */
     .main-navbar {
-      background-color: #ffffffcc; /* 微透明白 */
+      background-color: #ffffffcc;
       backdrop-filter: blur(6px);
       color: #1B5E20;
       display: flex;
@@ -53,13 +44,8 @@
     .main-navbar .nav-logo {
       font-size: 1.5rem;
       font-weight: 700;
-      color: #2E7D32;
       text-decoration: none;
-      display: flex;
-      align-items: center;
-    }
-    .nav-links {
-      display: flex;
+      color: #2E7D32;
     }
     .nav-links a {
       margin-left: 1.5rem;
@@ -75,268 +61,110 @@
       border-bottom: 2px solid #1B5E20;
     }
     .container {
-      max-width: 1100px;
-      margin: 32px auto 0 auto;
-      padding: 0 16px 40px 16px;
-    }
-    h1, h2 {
-      color: var(--morandi-blue);
-      margin-top: 32px;
-      margin-bottom: 18px;
-      font-weight: 800;
-      letter-spacing: 2px;
-    }
-    /* 工具分類區塊 */
-    .tool-category-flexboard {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-      justify-content: center;
-      margin-bottom: 38px;
-      margin-top: 38px;
-    }
-    .category-col {
-      background: var(--morandi-block);
-      border-radius: 12px;
-      min-width: 200px;
-      max-width: 230px;
-      padding: 0 0 10px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      box-shadow: 0 2px 8px #b7c4b140;
-      border: 2.5px solid var(--morandi-green-light);
-      transition: box-shadow 0.18s, border 0.18s;
-    }
-    .category-col:hover {
-      box-shadow: 0 6px 24px #b7c4b199;
-      border-color: var(--morandi-blue);
-    }
-    .category-title {
-      background: var(--morandi-green-dark);
-      color: #fff;
-      border-radius: 10px 10px 0 0;
-      width: 100%;
-      text-align: center;
-      font-size: 1.14em;
-      font-weight: bold;
-      letter-spacing: 1px;
-      padding: 13px 0 10px 0;
-      margin-bottom: 0;
-      border-bottom: 2px solid var(--morandi-green-light);
-    }
-    .category-list {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 11px;
-      width: 90%;
-      margin: 18px auto 6px auto;
-    }
-    .category-list a {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      color: var(--morandi-green-dark);
-      text-decoration: none;
-      font-size: 1.04em;
-      font-weight: 500;
-      padding: 3px 0 3px 0;
-      transition: color 0.13s, background 0.13s;
-      border-radius: 4px;
-    }
-    .category-list a:hover {
-      color: var(--morandi-blue);
-      background: var(--morandi-green-lighter);
-    }
-    .category-icon {
-      width: 22px;
-      height: 22px;
-      object-fit: contain;
-    }
-    @media (max-width: 900px) {
-      .container { max-width: 99vw; }
-      .tool-category-flexboard { flex-direction: column; gap: 18px; align-items: center;}
-      .category-col { max-width: 98vw; width: 96vw;}
-      .category-title { font-size: 1.08em;}
-    }
-    /* 影片平台比較區塊 */
-    .compare-section {
-      background: linear-gradient(135deg, #f8fafc 80%, #e2ede9 100%);
-      padding: 42px 0 38px 0;
-      border-radius: 18px;
-      max-width: 1100px;
-      margin: 48px auto 36px auto;
-      box-shadow: 0 6px 32px #b7c4b133;
-    }
-    .compare-section h2 {
-      text-align: center;
-      color: var(--morandi-blue);
-      font-size: 2em;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      margin-bottom: 30px;
-      margin-top: 0;
-    }
-    .platform-compare-cards {
-      display: flex;
-      flex-wrap: nowrap;
-      justify-content: center;
-      gap: 32px;
       max-width: 1000px;
-      margin: 0 auto 32px auto;
+      margin: 2rem auto;
+      padding: 0 1.5rem 60px 1.5rem;
+      flex: 1 0 auto;
     }
-    .platform-card {
-      background: #fff;
-      border-radius: 22px;
-      box-shadow: 0 6px 20px #b7c4b133;
-      padding: 28px 26px 22px 26px;
-      width: 270px;
-      min-width: 200px;
-      border-top: 7px solid var(--morandi-accent);
+    .workflow-title {
+      color: #388E3C;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.1rem;
+      letter-spacing: 1.5px;
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      position: relative;
-      transition: box-shadow 0.18s, border-top 0.18s;
-      margin-bottom: 0;
+      align-items: center;
     }
-    .platform-card.veo { border-top-color: var(--morandi-green-dark); }
-    .platform-card.sora { border-top-color: var(--morandi-blue-strong); }
-    .platform-card.runway { border-top-color: var(--runway-purple); }
-    .platform-card.pika { border-top-color: var(--pika-orange);}
-    .platform-title {
-      font-size: 1.25em;
-      font-weight: 700;
-      margin-bottom: 7px;
-      letter-spacing: 0.7px;
-      line-height: 1.1;
+    .workflow-title .icon {
+      font-size: 1.3em;
+      margin-right: 11px;
     }
-    .platform-card.veo .platform-title { color: var(--morandi-green-dark);}
-    .platform-card.sora .platform-title { color: var(--morandi-blue-strong);}
-    .platform-card.runway .platform-title { color: var(--runway-purple);}
-    .platform-card.pika .platform-title { color: var(--pika-orange);}
-    .platform-stars {
-      font-size: 1.15em;
-      color: #f6b800;
-      margin-bottom: 9px;
-      letter-spacing: 1.2px;
+    .workflow-desc {
+      color: #1B5E20;
+      font-size: 1.12rem;
+      margin-bottom: 24px;
+      margin-top: 0;
+      letter-spacing: 0.5px;
     }
-    .platform-desc {
-      color: #333;
-      font-size: 1.07em;
-      margin-bottom: 0;
-      margin-top: 2px;
-      line-height: 1.65;
-      min-height: 44px;
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2rem;
     }
-    @media (max-width: 1150px) {
-      .platform-compare-cards { flex-wrap: wrap; gap: 22px; }
-      .platform-card { width: 97vw; max-width: 340px;}
-    }
-    @media (max-width: 900px) {
-      .platform-compare-cards { flex-direction: column; gap: 16px 0; }
-      .platform-card { width: 98vw; max-width: 350px; }
-    }
-    /* 其餘比較區塊（可保留原設計） */
-    .compare-table-block {
-      max-width: 970px;
-      margin: 0 auto 28px auto;
-      padding: 0 12px;
-    }
-    .compare-table-block h3 {
-      color: var(--morandi-blue);
-      font-size: 1.13em;
-      font-weight: 700;
-      margin: 18px 0 14px 0;
-      letter-spacing: 1px;
-    }
-    .compare-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 1.04em;
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 12px #b7c4b133;
-    }
-    .compare-table thead tr {
-      background: var(--morandi-green-lighter);
-    }
-    .compare-table th, .compare-table td {
-      padding: 8px 6px;
-      text-align: center;
-    }
-    .compare-table tbody tr:nth-child(odd) {
-      background: #f8fafc;
-    }
-    .compare-table tbody tr:nth-child(even) {
-      background: #fff;
-    }
-    .compare-table td {
-      font-weight: 400;
-    }
-    .compare-table .label-veo { color: var(--morandi-green-dark); font-weight: 700;}
-    .compare-table .label-sora { color: var(--morandi-blue-strong); font-weight: 700;}
-    .compare-table .label-runway { color: var(--runway-purple); font-weight: 700;}
-    .compare-table .label-pika { color: var(--pika-orange); font-weight: 700;}
-    .compare-bottom-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px 8vw;
-      padding: 0 7vw 0 7vw;
-      margin-top: 22px;
-    }
-    .compare-bottom-row .col {
-      flex: 1;
-      min-width: 230px;
-    }
-    .compare-bottom-row h3 {
-      color: var(--morandi-blue);
-      font-size: 1.03em;
-      font-weight: 700;
-      margin: 0 0 7px 0;
-      letter-spacing: 1px;
-    }
-    .compare-bottom-row ul {
-      font-size: 1.01em;
-      line-height: 1.7;
-      margin: 0 0 0 18px;
-      padding: 0;
-    }
-    .compare-bottom-row li {
-      margin-bottom: 2px;
-    }
-    .compare-summary {
-      background: var(--morandi-green-lighter);
+    .workflow-card {
+      background-color: #ffffffee;
+      border: 1px solid #E0E0E0;
       border-radius: 8px;
-      padding: 13px 12px;
-      font-size: 1.01em;
-      line-height: 1.7;
-      margin-bottom: 8px;
+      padding: 1.4rem 1.3rem 1.2rem 1.3rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      transition: transform 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(3px);
+      margin-bottom: 0.6rem;
+    }
+    .workflow-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    .workflow-card .step-title {
+      color: #388E3C;
+      font-size: 1.18rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+      letter-spacing: 0.8px;
+      display: flex;
+      align-items: center;
+    }
+    .workflow-card .step-title .icon {
+      margin-right: 8px;
+      font-size: 1.14em;
+    }
+    .workflow-card ul {
+      padding-left: 1.2rem;
+      color: #555;
+      margin-bottom: 0;
+    }
+    .workflow-card li {
+      margin-bottom: 7px;
+    }
+    .workflow-card strong {
+      color: #2E7D32;
+      font-weight: 600;
+    }
+    .workflow-note {
+      color: #1B5E20;
+      background: #f0f7ef;
+      border-radius: 8px;
+      padding: 16px 24px;
+      font-size: 1.05em;
+      box-shadow: 0 2px 8px rgba(100,100,100,0.07);
+      margin-top: 5px;
+      margin-bottom: 0;
     }
     .main-footer {
       width: 100%;
-      background: var(--morandi-green-dark);
+      background: #587b6a;
       color: #fff;
       text-align: center;
       padding: 18px 0 12px 0;
       font-size: 1.08em;
       font-family: 'Noto Sans TC', sans-serif;
       letter-spacing: 1px;
-      margin-top: 40px;
       border-radius: 0 0 8px 8px;
       box-shadow: 0 -2px 12px #b7c4b133;
+      flex-shrink: 0;
+      margin-top: auto;
     }
-    @media (max-width: 900px) {
-      .compare-section { padding: 18px 0 12px 0; max-width: 100vw;}
-      .compare-table-block { max-width: 100vw; padding: 0 2vw;}
-      .compare-bottom-row { padding: 0 2vw 0 2vw; flex-direction: column; gap: 20px 0;}
+    @media (max-width: 700px) {
+      .container { padding: 0 1vw 60px 1vw; }
+      .workflow-title { font-size: 1.15em;}
+      .workflow-card { padding: 1.1rem 0.6rem 1rem 0.8rem;}
+      .workflow-card .step-title { font-size: 1em;}
     }
   </style>
 </head>
 <body>
-  <!-- 粒子動畫背景 -->
+  <!-- ✅ 粒子背景容器 -->
   <div id="tsparticles"></div>
   <!-- 導覽列 -->
   <nav class="main-navbar">
@@ -351,173 +179,76 @@
     </div>
   </nav>
   <div class="container">
-    <h1>AI 生成工具平台分類</h1>
-    <div class="tool-category-flexboard">
-      <!-- 文生圖片 -->
-      <div class="category-col">
-        <div class="category-title">文生圖片</div>
-        <div class="category-list">
-          <a href="https://chat.openai.com/" target="_blank"><span>ChatGPT</span></a>
-          <a href="https://grok.x.ai/" target="_blank"><span>Grok</span></a>
-          <a href="https://www.bing.com/images/create" target="_blank"><span>Bing</span></a>
-          <a href="https://copilot.microsoft.com/" target="_blank"><span>Copilot</span></a>
-          <a href="https://labs.openai.com/" target="_blank"><span>DALL·E</span></a>
-          <a href="https://leonardo.ai/" target="_blank"><span>Leonardo.Ai</span></a>
-          <a href="https://www.dreamina.com/" target="_blank"><span>Dreamina</span></a>
-        </div>
+    <div class="workflow-title">
+      <span class="icon">🛠️</span> 製作流程
+    </div>
+    <p class="workflow-desc">
+      AI 影片製作通常會經歷以下主要步驟，每個階段可搭配不同工具與提示詞（Prompt）設計，有效提升產出品質與效率：
+    </p>
+    <div class="workflow-grid">
+      <div class="workflow-card">
+        <div class="step-title"><span class="icon">📝</span>1. 腳本設計</div>
+        <ul>
+          <li>根據主題與對象，規劃故事內容、角色與分鏡。</li>
+          <li>設計分場、對白和情感語氣，決定影片呈現方式。</li>
+          <li><strong>建議工具：</strong>ChatGPT、Gemini等文字生成工具。</li>
+        </ul>
       </div>
-      <!-- 文生/圖生影片 -->
-      <div class="category-col">
-        <div class="category-title">文生/圖生影片</div>
-        <div class="category-list">
-          <a href="https://runwayml.com/" target="_blank"><span>runway</span></a>
-          <a href="https://openai.com/sora" target="_blank"><span>Sora</span></a>
-          <a href="https://hailuoai.com/" target="_blank"><span>Hailuo AI</span></a>
-          <a href="https://lumalabs.ai/" target="_blank"><span>Luma AI</span></a>
-          <a href="https://app.klingai.com/global/?gad_source=1&gad_campaignid=22391749888&gbraid=0AAAAA_AcKMn4cz39BDD4ddFjOzxlBISjQ&gclid=CjwKCAjw4K3DBhBqEiwAYtG_9IDYqD_XsjxJoU8C8G_wQsxnMCQKtVOxVSldcrDUSZjc7eNB3pX_QhoCDN0QAvD_BwE" target="_blank"><span>KLING</span></a>
-        </div>
+      <div class="workflow-card">
+        <div class="step-title"><span class="icon">🖼️</span>2. 圖像／畫面生成</div>
+        <ul>
+          <li>依據腳本內容，產生所需角色、場景、物件等圖像。</li>
+          <li>選擇插畫、寫實、3D等適合的風格。</li>
+          <li><strong>建議工具：</strong>Midjourney、Bing、Leonardo等。</li>
+        </ul>
       </div>
-      <!-- 虛擬人工具 -->
-      <div class="category-col">
-        <div class="category-title">虛擬人工具</div>
-        <div class="category-list">
-          <a href="https://www.d-id.com/" target="_blank"><span>D-ID</span></a>
-          <a href="https://www.heygen.com/" target="_blank"><span>HeyGen</span></a>
-          <a href="https://www.synthesia.io/" target="_blank"><span>synthesia</span></a>
-        </div>
+      <div class="workflow-card">
+        <div class="step-title"><span class="icon">🔊</span>3. 旁白與配音</div>
+        <ul>
+          <li>根據腳本內容，生成自然語音旁白。</li>
+          <li>可選擇不同語氣、性別、語言的聲音。</li>
+          <li><strong>建議工具：</strong>Suno、TTSmaker等。</li>
+        </ul>
       </div>
-      <!-- 音樂/影片編輯 -->
-      <div class="category-col">
-        <div class="category-title">音樂/影片編輯</div>
-        <div class="category-list">
-          <a href="https://ttsmaker.com/" target="_blank"><span>TTSMAKER</span></a>
-          <a href="https://www.suno.ai/" target="_blank"><span>Suno</span></a>
-          <a href="https://www.canva.com/" target="_blank"><span>Canva</span></a>
-          <a href="https://clipchamp.com/" target="_blank"><span>Clipchamp</span></a>
-          <a href="https://www.flexclip.com/" target="_blank"><span>flexClip</span></a>
-          <a href="https://www.capcut.com/zh-tw/" target="_blank"><span>CapCut</span></a>
-        </div>
+      <div class="workflow-card">
+        <div class="step-title"><span class="icon">🎬</span>4. 影片生成</div>
+        <ul>
+          <li>將腳本、圖像、配音素材整合，產出影片。</li>
+          <li>可加入字幕、特效、音樂等強化效果。</li>
+          <li><strong>建議工具：</strong>Runway、Pika、HeyGen等。</li>
+        </ul>
+      </div>
+      <div class="workflow-card">
+        <div class="step-title"><span class="icon">✂️</span>5. 影片剪輯</div>
+        <ul>
+          <li>剪輯合成各段影片、調整節奏、加入轉場與特效。</li>
+          <li>輸出合適的影片格式、解析度，準備發布。</li>
+          <li><strong>建議工具：</strong>Clipchamp、FlexClip 等影片工具。</li>
+        </ul>
       </div>
     </div>
-    <!-- 影片平台比較區塊 -->
-    <section class="compare-section">
-      <h2>主流 AI 影片生成平台比較</h2>
-      <!-- 平台卡片（新版一行四格，色彩符合） -->
-      <div class="platform-compare-cards">
-        <div class="platform-card veo">
-          <div class="platform-title">Google Veo 3</div>
-          <div class="platform-stars">★★★★★</div>
-          <div class="platform-desc">畫質極佳，支援多語言，中/英語意理解強，適合生活/寫實風格。</div>
-        </div>
-        <div class="platform-card sora">
-          <div class="platform-title">OpenAI Sora</div>
-          <div class="platform-stars">★★★★★</div>
-          <div class="platform-desc">動態物理表現一流，敘事短片、商用影片首選，目前封測。</div>
-        </div>
-        <div class="platform-card runway">
-          <div class="platform-title">Runway Gen-4</div>
-          <div class="platform-stars">★★★★☆</div>
-          <div class="platform-desc">即時生成、特效豐富、創意應用彈性高，適合短影音與行銷。</div>
-        </div>
-        <div class="platform-card pika">
-          <div class="platform-title">Pika Labs</div>
-          <div class="platform-stars">★★★★☆</div>
-          <div class="platform-desc">動畫角色、卡通風格突出，輕鬆入門，遊戲/動畫短片推薦。</div>
-        </div>
-      </div>
-      <!-- 比較表格 -->
-      <div class="compare-table-block">
-        <h3>重點功能對比</h3>
-        <table class="compare-table">
-          <thead>
-            <tr>
-              <th>平台</th>
-              <th>畫質</th>
-              <th>語意理解</th>
-              <th>動態連貫</th>
-              <th>特效/風格</th>
-              <th>操作易用</th>
-              <th>適合場景</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="label-veo">Veo 3</td>
-              <td>★★★★★</td>
-              <td>★★★★★</td>
-              <td>★★★★☆</td>
-              <td>★★★☆☆</td>
-              <td>★★★★☆</td>
-              <td>生活片、紀錄片</td>
-            </tr>
-            <tr>
-              <td class="label-sora">Sora</td>
-              <td>★★★★★</td>
-              <td>★★★★☆</td>
-              <td>★★★★★</td>
-              <td>★★★★☆</td>
-              <td>★★★☆☆</td>
-              <td>劇情片、廣告</td>
-            </tr>
-            <tr>
-              <td class="label-runway">Runway Gen-4</td>
-              <td>★★★★☆</td>
-              <td>★★★☆☆</td>
-              <td>★★★★☆</td>
-              <td>★★★★★</td>
-              <td>★★★★★</td>
-              <td>短影音、行銷素材</td>
-            </tr>
-            <tr>
-              <td class="label-pika">Pika Labs</td>
-              <td>★★★☆☆</td>
-              <td>★★★☆☆</td>
-              <td>★★★☆☆</td>
-              <td>★★★★★</td>
-              <td>★★★★★</td>
-              <td>動畫、遊戲風</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <!-- 應用場景與結論 -->
-      <div class="compare-bottom-row">
-        <div class="col">
-          <h3>平台適用建議</h3>
-          <ul>
-            <li><span style="color:#348e65;">Veo 3</span>：生活寫實、紀錄片、語言多樣性需求</li>
-            <li><span style="color:#2951b6;">Sora</span>：敘事/劇情主導、物理細節動畫</li>
-            <li><span style="color:#a141c2;">Runway Gen-4</span>：快速短片、特效豐富、社群行銷</li>
-            <li><span style="color:#f2a93b;">Pika Labs</span>：動畫角色、遊戲、卡通短片</li>
-          </ul>
-        </div>
-        <div class="col">
-          <h3>總結</h3>
-          <div class="compare-summary">
-            <b style="color:#348e65;">Veo 3</b> 生活片、紀錄片首選；<b style="color:#2951b6;">Sora</b> 擅長敘事與物理細節；<b style="color:#a141c2;">Runway Gen-4</b> 適合快速多變短影音；<b style="color:#f2a93b;">Pika Labs</b> 動畫/遊戲卡通優勢明顯。選擇依需求取向，發揮最大AI影片創作效益！
-          </div>
-        </div>
-      </div>
-    </section>
+    <div class="workflow-note">
+      每個階段都可根據需求反覆調整，並結合自動化工具進行流程優化，讓影片製作更高效與具創意！
+    </div>
   </div>
   <footer class="main-footer">
     <span id="footer-year"></span> 奇美醫院教學中心製
   </footer>
-  <!-- tsParticles CDN & 設定 -->
+  <!-- ✅ tsParticles 載入與設定 -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script>
     tsParticles.load("tsparticles", {
       fullScreen: { enable: false },
       particles: {
         number: { value: 80, density: { enable: true, area: 800 } },
-        color: { value: "#88a096" },
+        color: { value: "#4CAF50" },
         shape: { type: "circle" },
         opacity: { value: 0.3 },
         size: { value: 2 },
         links: {
           enable: true,
           distance: 120,
-          color: "#c6d1c5",
+          color: "#81C784",
           opacity: 0.4,
           width: 1
         },
@@ -528,10 +259,14 @@
           outModes: { default: "bounce" }
         }
       },
-      background: { color: "#fdfbf6" },
+      background: {
+        color: "#FDFBF6"
+      },
       detectRetina: true
     });
-    // 導覽列 active 標示（自動化，請套用到所有頁面！）
+  </script>
+  <script>
+    // 導覽列 active 標示
     document.querySelectorAll('.nav-links a').forEach(link => {
       const href = link.getAttribute('href');
       if (
