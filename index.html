@@ -1,92 +1,176 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<title>生成式AI影片操作指南</title>
-<style>
-body { font-family: Arial, sans-serif; margin: 20px; }
-nav button { margin-right: 10px; }
-section { display: none; margin-top: 20px; }
-section.active { display: block; }
-textarea { width: 100%; height: 80px; }
-.result { background: #f0f0f0; padding: 10px; margin-top: 10px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>生成式AI影片操作指南</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      background-color: #7FB77E;
+      color: white;
+      padding: 20px;
+      margin: 0;
+      text-align: center;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background-color: white;
+      padding: 15px;
+      gap: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    button {
+      padding: 10px 16px;
+      border: none;
+      background-color: #E4EFE7;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #A0C49D;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    section {
+      display: none;
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result {
+      background-color: #F0F8EC;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 80px;
+      padding: 8px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      resize: vertical;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      button {
+        font-size: 12px;
+        padding: 8px 12px;
+      }
+    }
+  </style>
 </head>
 <body>
-<h1>生成式AI影片操作指南</h1>
-<nav>
-  <button onclick="showSection('home')">首頁</button>
-  <button onclick="showSection('concepts')">核心概念</button>
-  <button onclick="showSection('workflow')">製作流程</button>
-  <button onclick="showSection('tools')">相關工具</button>
-  <button onclick="showSection('prompts')">提示詞結構</button>
-  <button onclick="showSection('consistency')">素材一致性</button>
-  <button onclick="showSection('custom')">客製化prompt 輸入區</button>
-</nav>
-<section id="home" class="active">
-  <h2>首頁</h2>
-  <p>歡迎使用生成式AI影片操作指南。本指南將帶您了解如何利用AI工具製作影片。</p>
-</section>
-<section id="concepts">
-  <h2>核心概念</h2>
-  <p>介紹生成式AI在影片製作中的重要概念與應用。</p>
-</section>
-<section id="workflow">
-  <h2>製作流程</h2>
-  <p>從腳本撰寫、畫面生成到旁白錄製的完整流程。</p>
-</section>
-<section id="tools">
-  <h2>相關工具</h2>
-  <p>列出常用的生成式AI工具與資源連結。</p>
-</section>
-<section id="prompts">
-  <h2>提示詞結構</h2>
-  <p>如何撰寫適合腳本、圖片與旁白生成的提示詞。</p>
-</section>
-<section id="consistency">
-  <h2>素材一致性</h2>
-  <p>保持影片各素材風格一致的技巧。</p>
-</section>
-<section id="custom">
-  <h2>客製化prompt 輸入區</h2>
-  <div>
-    <label>腳本生成器</label>
+
+  <h1>生成式AI影片操作指南</h1>
+
+  <nav>
+    <button onclick="showSection('home')">首頁</button>
+    <button onclick="showSection('concepts')">核心概念</button>
+    <button onclick="showSection('workflow')">製作流程</button>
+    <button onclick="showSection('tools')">相關工具</button>
+    <button onclick="showSection('prompts')">提示詞結構</button>
+    <button onclick="showSection('consistency')">素材一致性</button>
+    <button onclick="showSection('custom')">客製化prompt 輸入區</button>
+  </nav>
+
+  <section id="home" class="active">
+    <h2>首頁</h2>
+    <p>歡迎使用生成式AI影片操作指南。本指南將帶您了解如何利用AI工具製作影片。</p>
+  </section>
+
+  <section id="concepts">
+    <h2>核心概念</h2>
+    <p>介紹影片腳本的構成邏輯、節奏與畫面設計的原則。</p>
+  </section>
+
+  <section id="workflow">
+    <h2>製作流程</h2>
+    <p>腳本設計 → 圖像生成 → 配音合成 → 視訊剪輯 → 成片輸出。</p>
+  </section>
+
+  <section id="tools">
+    <h2>相關工具</h2>
+    <p>推薦使用 Runway、Pika、Leonardo、Heygen 等生成式AI影片工具。</p>
+  </section>
+
+  <section id="prompts">
+    <h2>提示詞結構</h2>
+    <p>角色 + 語氣 + 格式 + 段落內容，是一個有效 prompt 的基本架構。</p>
+  </section>
+
+  <section id="consistency">
+    <h2>素材一致性</h2>
+    <p>確保影片中的畫面、語音與旁白風格一致，以維持專業感與敘事流暢。</p>
+  </section>
+
+  <section id="custom">
+    <h2>客製化prompt 輸入區</h2>
+    <label for="scriptPrompt">影片腳本提示詞</label>
     <textarea id="scriptPrompt" placeholder="輸入腳本提示詞"></textarea>
-  </div>
-  <div>
-    <label>圖片生成器</label>
-    <textarea id="imagePrompt" placeholder="輸入圖片提示詞"></textarea>
-  </div>
-  <div>
-    <label>旁白生成器</label>
+
+    <label for="imagePrompt">圖像生成提示詞</label>
+    <textarea id="imagePrompt" placeholder="輸入圖像提示詞"></textarea>
+
+    <label for="narrationPrompt">旁白生成提示詞</label>
     <textarea id="narrationPrompt" placeholder="輸入旁白提示詞"></textarea>
-  </div>
-  <button onclick="generate()">生成內容</button>
-  <div id="results"></div>
-</section>
-<script>
-function showSection(id) {
-  document.querySelectorAll('section').forEach(sec => {
-    sec.classList.remove('active');
-  });
-  document.getElementById(id).classList.add('active');
-}
-function generate() {
-  const scriptP = document.getElementById('scriptPrompt').value;
-  const imageP = document.getElementById('imagePrompt').value;
-  const narrP = document.getElementById('narrationPrompt').value;
-  let html = '';
-  if (scriptP) {
-    html += `<div class="result"><strong>腳本生成結果：</strong><p>模擬GPT：根據提示「${scriptP}」生成腳本內容。</p></div>`;
-  }
-  if (imageP) {
-    html += `<div class="result"><strong>圖片生成結果：</strong><p>模擬GPT：根據提示「${imageP}」生成圖片描述。</p></div>`;
-  }
-  if (narrP) {
-    html += `<div class="result"><strong>旁白生成結果：</strong><p>模擬GPT：根據提示「${narrP}」生成旁白稿。</p></div>`;
-  }
-  document.getElementById('results').innerHTML = html;
-}
-</script>
+
+    <button onclick="generate()">產出內容</button>
+    <div id="results" class="result"></div>
+  </section>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function generate() {
+      const script = document.getElementById('scriptPrompt').value;
+      const image = document.getElementById('imagePrompt').value;
+      const narr = document.getElementById('narrationPrompt').value;
+
+      let html = '';
+      if (script) html += `<strong>影片腳本提示：</strong><p>${script}</p>`;
+      if (image) html += `<strong>圖像提示：</strong><p>${image}</p>`;
+      if (narr) html += `<strong>旁白提示：</strong><p>${narr}</p>`;
+
+      document.getElementById('results').innerHTML = html;
+    }
+  </script>
+
 </body>
 </html>
