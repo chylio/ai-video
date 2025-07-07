@@ -28,7 +28,7 @@
       position: relative;
     }
 
-    /* ✅ 粒子背景 */
+    /* ✅ 粒子背景層 */
     #tsparticles {
       position: fixed;
       width: 100%;
@@ -36,61 +36,50 @@
       z-index: -1;
     }
 
+    /* ✅ 統一版導覽列（與首頁一致） */
     .main-navbar {
       width: 100%;
       background: #ffffffcc;
-      color: var(--morandi-green-dark);
+      backdrop-filter: blur(10px);
+      color: #1B5E20;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      padding: 0 0 0 10px;
-      min-height: 48px;
-      border-radius: 8px 8px 0 0;
-      box-sizing: border-box;
-      backdrop-filter: blur(6px);
+      padding: 0.8rem 1.5rem;
+      border-bottom: 1px solid #E0E0E0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
 
     .main-navbar .nav-logo {
-      font-size: 2.2em;
+      font-size: 1.5rem;
       font-weight: 700;
-      color: var(--morandi-green-dark);
-      margin-right: 28px;
-      letter-spacing: 1.5px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      color: #2E7D32;
       text-decoration: none;
-      line-height: 1.1;
       display: flex;
       align-items: center;
     }
 
-    .main-navbar .nav-links {
+    .nav-links {
       display: flex;
-      gap: 18px;
-      margin-top: 3px;
+      gap: 1.2rem;
     }
 
-    .main-navbar .nav-links a {
-      color: var(--morandi-green-dark);
+    .nav-links a {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #4CAF50;
       text-decoration: none;
-      font-size: 1.25em;
-      font-weight: 700;
-      padding: 2px 14px;
-      border-radius: 8px;
-      transition: background 0.15s, color 0.13s;
-      letter-spacing: 0.5px;
-      margin: 0 2px;
+      padding-bottom: 3px;
+      transition: all 0.3s ease;
     }
 
-    .main-navbar .nav-links a.active,
-    .main-navbar .nav-links a:hover {
-      background: var(--morandi-green-light);
-      color: white;
-    }
-
-    @media (max-width: 900px) {
-      .main-navbar { flex-direction: column; align-items: flex-start; min-height: unset; padding: 0 0 0 6px;}
-      .main-navbar .nav-logo { font-size: 1.3em; margin-bottom: 4px;}
-      .main-navbar .nav-links { gap: 8px; flex-wrap: wrap;}
-      .main-navbar .nav-links a { font-size: 1em; }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #1B5E20;
+      border-bottom: 2px solid #1B5E20;
     }
 
     .container {
@@ -129,7 +118,6 @@
       padding: 22px 28px 18px 28px;
       color: var(--morandi-green-dark);
       box-shadow: 0 2px 12px rgba(150,170,150,0.10);
-      position: relative;
       border-left: 8px solid var(--morandi-green-dark);
       backdrop-filter: blur(2px);
     }
@@ -170,7 +158,6 @@
       border-radius: 9px;
       padding: 14px 22px;
       box-shadow: 0 2px 8px rgba(100,100,100,0.08);
-      backdrop-filter: blur(2px);
     }
 
     .main-footer {
@@ -195,7 +182,7 @@
   </style>
 </head>
 <body>
-  <!-- ✅ 粒子背景 -->
+  <!-- 粒子動畫背景 -->
   <div id="tsparticles"></div>
 
   <!-- 導覽列 -->
@@ -211,6 +198,7 @@
     </div>
   </nav>
 
+  <!-- 主內容 -->
   <div class="container">
     <div class="core-title">
       <span class="icon">📘</span> 核心應用
@@ -231,36 +219,37 @@
       <div class="block-title"><span class="icon">🖼️</span>圖像設計與創意產業</div>
       <ul>
         <li><strong>功能：</strong>快速產出設計概念、激發創意多樣性、降低專業門檻。</li>
-        <li><strong>應用場景：</strong>生成精畫風品牌設計、根據文字描述產生高品質圖片。</li>
+        <li><strong>應用場景：</strong>生成品牌設計圖稿、根據文字描述產生高品質圖片。</li>
       </ul>
     </div>
 
     <div class="core-block">
       <div class="block-title"><span class="icon">🎓</span>教育輔助與個性化學習</div>
       <ul>
-        <li><strong>功能：</strong>提供個性化教材、增強學習體驗、提升衛教效率。</li>
-        <li><strong>應用場景：</strong>生成教學材料、個人學習計畫、健康宣導。</li>
+        <li><strong>功能：</strong>提升教材製作效率、提供個性化學習體驗、增強衛教效果。</li>
+        <li><strong>應用場景：</strong>生成教學材料、設計個人學習計畫、製作健康宣導資源。</li>
       </ul>
     </div>
 
     <div class="core-block">
       <div class="block-title"><span class="icon">🎵</span>音樂與娛樂創作</div>
       <ul>
-        <li><strong>功能：</strong>自動生成音樂元素、降低創作門檻、提供靈感。</li>
-        <li><strong>應用場景：</strong>自動旋律、協作音樂創作、創意故事生成。</li>
+        <li><strong>功能：</strong>自動生成旋律、降低創作門檻、提供創作靈感。</li>
+        <li><strong>應用場景：</strong>音樂創作、故事生成、AI助手角色建立。</li>
       </ul>
     </div>
 
     <div class="core-note">
-      影片可應用於衛教、教學輔助、流程說明、醫院或單位形象介紹。
+      影片可應用於衛教、教學輔助、流程或活動說明、醫院或單位形象介紹。
     </div>
   </div>
 
+  <!-- 頁腳 -->
   <footer class="main-footer">
     <span id="footer-year"></span> 奇美醫院教學中心製
   </footer>
 
-  <!-- ✅ tsParticles CDN -->
+  <!-- tsParticles CDN & 設定 -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script>
     tsParticles.load("tsparticles", {
@@ -290,6 +279,7 @@
     });
   </script>
 
+  <!-- Active Link + Footer Year -->
   <script>
     document.querySelectorAll('.nav-links a').forEach(link => {
       const href = link.getAttribute('href');
