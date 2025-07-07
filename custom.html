@@ -2,26 +2,22 @@
     <div class="generator-tabs">
       <button class="generator-tab active" data-tab="script">
         <span class="generator-tab-title">
-          <span>文生腳本 Prompt生</span>
-          <span>生成器</span>
+          文生腳本 Prompt生<br><span class="tab-subtitle">生成器</span>
         </span>
       </button>
       <button class="generator-tab" data-tab="image">
         <span class="generator-tab-title">
-          <span>文生圖片 Prompt生</span>
-          <span>生成器</span>
+          文生圖片 Prompt生<br><span class="tab-subtitle">生成器</span>
         </span>
       </button>
       <button class="generator-tab" data-tab="video">
         <span class="generator-tab-title">
-          <span>文生影片 Prompt生</span>
-          <span>生成器</span>
+          文生影片 Prompt生<br><span class="tab-subtitle">生成器</span>
         </span>
       </button>
       <button class="generator-tab" data-tab="agent">
         <span class="generator-tab-title">
-          <span>影片AI Agent執行生</span>
-          <span>生成器</span>
+          影片AI Agent執行生<br><span class="tab-subtitle">生成器</span>
         </span>
       </button>
     </div>
@@ -40,7 +36,7 @@
       border: none;
       padding: 0;
       border-radius: 8px 8px 0 0;
-      font-size: 1.14em;
+      font-size: 1.22em;
       font-weight: 700;
       cursor: pointer;
       transition: background 0.12s, color 0.12s;
@@ -50,8 +46,8 @@
       align-items: center;
       justify-content: center;
       min-width: 220px;
-      min-height: 70px;
-      /* 強制一樣高，讓生成器字換行置中 */
+      min-height: 84px;
+      /* 增高更像範例圖 */
     }
     .generator-tab.active {
       background: var(--morandi-blue);
@@ -62,16 +58,18 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100%;
       width: 100%;
       font-weight: 700;
-      line-height: 1.15;
+      line-height: 1.18;
+      text-align: center;
     }
-    .generator-tab-title span {
+    .generator-tab-title .tab-subtitle {
       display: block;
       text-align: center;
       font-weight: 700;
-      letter-spacing: 1px;
+      margin-top: 2px;
+      font-size: 1em;
+      /* 讓生成器在下一行且置中 */
     }
     @media (max-width:600px) {
       .generator-tabs { flex-direction: column; gap: 2px;}
