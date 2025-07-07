@@ -6,10 +6,129 @@
   <title>AI影片製作指南</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    /* ...你的CSS維持原樣... */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+
+    body {
+      background-color: #FDFBF6;
+      color: #1B5E20;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ✅ 粒子背景層 */
+    #tsparticles {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .main-navbar {
+      background-color: #ffffffcc; /* 微透明白 */
+      backdrop-filter: blur(6px);
+      color: #1B5E20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #E0E0E0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .main-navbar .nav-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      color: #2E7D32;
+    }
+
+    .nav-links a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: #4CAF50;
+      font-weight: 500;
+      transition: all 0.3s;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #1B5E20;
+      border-bottom: 2px solid #1B5E20;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .welcome h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #2E7D32;
+    }
+
+    .welcome p {
+      font-size: 1.1rem;
+      color: #444;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background-color: #ffffffee;
+      border: 1px solid #E0E0E0;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      transition: transform 0.3s, box-shadow 0.3s;
+      backdrop-filter: blur(3px);
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      color: #388E3C;
+      margin-bottom: 0.8rem;
+      font-size: 1.3rem;
+    }
+
+    .card ul {
+      padding-left: 1.2rem;
+      color: #555;
+    }
+
+    .card a {
+      color: #2E7D32;
+      font-weight: 600;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
+  <!-- ✅ 粒子背景容器 -->
+  <div id="tsparticles"></div>
+
   <nav class="main-navbar">
     <a href="index.html" class="nav-logo">AI影片製作指南</a>
     <div class="nav-links">
@@ -21,8 +140,8 @@
       <a href="custom.html">Prompt生成器</a>
     </div>
   </nav>
+
   <div class="container">
-    <!-- 歡迎區塊 -->
     <div class="welcome">
       <h1>歡迎來到 AI 影片製作指南！</h1>
       <p>
@@ -31,7 +150,7 @@
         一站式學會用AI打造你的專屬影片內容！
       </p>
     </div>
-    <!-- 兩列卡片式功能區塊 -->
+
     <div class="cards-grid">
       <div class="card">
         <h2>核心應用</h2>
@@ -65,7 +184,7 @@
         <h2>Prompt生成器</h2>
         <p>
           根據主題/風格/結構一鍵產生專屬Prompt，<br>
-          <a href="custom.html" style="text-decoration:underline;">立即體驗 Prompt 產生器 &rarr;</a>
+          <a href="custom.html">立即體驗 Prompt 產生器 &rarr;</a>
         </p>
       </div>
       <div class="card">
@@ -77,8 +196,41 @@
       </div>
     </div>
   </div>
+
+  <!-- ✅ tsParticles 載入與設定 -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script>
-    // 導覽列 active 標示（自動判斷，請套用到所有頁面）
+    tsParticles.load("tsparticles", {
+      fullScreen: { enable: false },
+      particles: {
+        number: { value: 80, density: { enable: true, area: 800 } },
+        color: { value: "#4CAF50" },
+        shape: { type: "circle" },
+        opacity: { value: 0.3 },
+        size: { value: 2 },
+        links: {
+          enable: true,
+          distance: 120,
+          color: "#81C784",
+          opacity: 0.4,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 1,
+          direction: "none",
+          outModes: { default: "bounce" }
+        }
+      },
+      background: {
+        color: "#FDFBF6"
+      },
+      detectRetina: true
+    });
+  </script>
+
+  <script>
+    // 導覽列 active 標示
     document.querySelectorAll('.nav-links a').forEach(link => {
       const href = link.getAttribute('href');
       if (
