@@ -19,6 +19,9 @@
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     /* ✅ 粒子背景層 */
@@ -68,7 +71,8 @@
     .container {
       max-width: 1000px;
       margin: 2rem auto;
-      padding: 0 1.5rem;
+      padding: 0 1.5rem 60px 1.5rem; /* footer預留空間 */
+      flex: 1 0 auto;
     }
 
     .welcome h1 {
@@ -122,6 +126,21 @@
 
     .card a:hover {
       text-decoration: underline;
+    }
+
+    .main-footer {
+      width: 100%;
+      background: #587b6a;
+      color: #fff;
+      text-align: center;
+      padding: 18px 0 12px 0;
+      font-size: 1.08em;
+      font-family: 'Noto Sans TC', sans-serif;
+      letter-spacing: 1px;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 -2px 12px #b7c4b133;
+      flex-shrink: 0;
+      margin-top: auto;
     }
   </style>
 </head>
@@ -197,6 +216,10 @@
     </div>
   </div>
 
+  <footer class="main-footer">
+    <span id="footer-year"></span> 奇美醫院教學中心製
+  </footer>
+
   <!-- ✅ tsParticles 載入與設定 -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script>
@@ -241,6 +264,8 @@
         link.classList.add('active');
       }
     });
+    // 自動插入年份到頁腳
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
